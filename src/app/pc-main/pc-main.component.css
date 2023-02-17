@@ -1,0 +1,67 @@
+.main-card {
+    width: 92%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: top;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    margin: 3%;
+}
+
+.focus-concept {
+    width: 100%;
+    /* Flex layout of external container */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.autocomplete {
+    width: 30%;
+}
+.buttons {
+    width: 30%;
+    /* Flex layout of external container */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-left: 15px;
+}
+
+
+
+.code-container {
+    width: 99%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: top;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    padding: 10px;
+    gap: 10px;
+}
+
+.code-card {
+    flex: 1;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    padding: 10px;
+}
+
+/* style for displaying source code */
+.code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    line-height: 1.5;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+}

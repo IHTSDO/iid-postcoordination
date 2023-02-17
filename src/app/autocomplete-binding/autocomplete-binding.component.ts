@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TerminologyService } from '../services/terminology.service';
-import { FormControl } from '@angular/forms';
 import {debounceTime, distinctUntilChanged, map, startWith, switchMap,tap} from 'rxjs/operators';
 import {Observable, of, Subject} from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { BindingDetailsComponent } from '../binding-details/binding-details.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-autocomplete-binding',
@@ -15,8 +15,10 @@ export class AutocompleteBindingComponent implements OnInit {
   formControl = new FormControl();
   autoFilter: Observable<any> | undefined;
   @Input() binding: any;
+  @Output() selectionChange = new EventEmitter<any>();
   loading = false;
-
+  selectedConcept: any = {};
+  
   constructor(private terminologyService: TerminologyService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -24,14 +26,23 @@ export class AutocompleteBindingComponent implements OnInit {
       debounceTime(300),
       distinctUntilChanged(),
       switchMap((term: string) =>  {
-        this.loading = true;
-        let response = this.terminologyService.expandValueSet(this.binding.ecl, term)
-        return response;
+        if (term?.length > 2) {
+          this.loading = true;
+          let response = this.terminologyService.expandValueSet(this.binding.ecl, term);
+          return response;
+        } else {
+          return of([]);
+        }
       }),
       tap(data => {
         this.loading = false;
       })
     );  
+  }
+
+  optionSelected(value: any) {
+    this.selectedConcept = value;
+    this.selectionChange.emit(value);
   }
 
   openDialog(): void {
@@ -44,6 +55,11 @@ export class AutocompleteBindingComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       // console.log('The dialog was closed');
     });
+  }
+
+  change(event: any) {
+    const item = event?.option?.value;
+    this.optionSelected({ code: item.code, display: item.display });
   }
 
 }

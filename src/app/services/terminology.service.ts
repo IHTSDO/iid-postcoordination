@@ -7,7 +7,7 @@ import { catchError, Observable, of } from 'rxjs';
 })
 export class TerminologyService {
 
-  snowstormFhirBase = 'https://snowstorm.ihtsdotools.org/snowstorm/snomed-ct/fhir';
+  snowstormFhirBase = 'https://snowstorm.ihtsdotools.org/fhir';
   defaultFhirUrlParam = 'http://snomed.info/sct'; // 'http://snomed.info/sct/11000221109/version/20211130'
   fhirUrlParam = this.defaultFhirUrlParam;
   lang = 'en';
@@ -40,7 +40,7 @@ export class TerminologyService {
     if (typeof terms != 'string') {
       terms = '';
     }
-    return `${this.snowstormFhirBase}/ValueSet/$expand?url=${this.fhirUrlParam}?fhir_vs=ecl/${encodeURIComponent(ecl)}&count=${count}&offset=${offset}&filter=${terms}&language=${this.lang}&designation=${this.lang}`;
+    return `${this.snowstormFhirBase}/ValueSet/$expand?url=${this.fhirUrlParam}?fhir_vs=ecl/${encodeURIComponent(ecl)}&count=${count}&offset=${offset}&filter=${terms}&language=${this.lang}`;
   }
 
   expandValueSet(ecl: string, terms: string, offset?: number, count?:number): Observable<any> {
@@ -80,7 +80,7 @@ export class TerminologyService {
 
   lookupConcept(conceptId: string) {
     // https://dev-is-browser.ihtsdotools.org/fhir/CodeSystem/$lookup?system=http://snomed.info/sct&code=313307000
-    let requestUrl = `${this.snowstormFhirBase}/CodeSystem/$lookup?system=http://snomed.info/sct&code=${conceptId}`;
+    let requestUrl = `${this.snowstormFhirBase}/CodeSystem/$lookup?system=http://snomed.info/sct&code=${conceptId}&property=normalForm`;
     return this.http.get<any>(requestUrl)
       .pipe(
         catchError(this.handleError<any>('lookupConcept', {}))

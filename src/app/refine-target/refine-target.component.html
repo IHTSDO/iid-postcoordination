@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Refining: {{data.title}}</h1>
+<mat-form-field class="filter">
+    <mat-label>Filter options</mat-label>
+    <input matInput [formControl]="formControl">
+</mat-form-field>
+<h4>Refinement options (<span *ngIf="!loading">{{expansionLength}} of {{total}}</span>
+    <span *ngIf="loading">-</span>)</h4>
+<div mat-dialog-content>
+    <mat-selection-list dense [multiple]="false">
+        <mat-list-option *ngFor="let item of (autoFilter | async)?.expansion?.contains" (click)="close(item);">
+            <!-- [mat-dialog-close]="item" -->
+            {{ item.display }} &nbsp;-&nbsp; <span class="muted">{{ item.code }}</span>
+        </mat-list-option>
+        <mat-list-item *ngIf="loading">
+            <mat-spinner [diameter]="20"></mat-spinner>
+        </mat-list-item>
+    </mat-selection-list>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="onNoClick()">Close</button>
+</div>

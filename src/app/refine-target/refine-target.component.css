@@ -1,0 +1,21 @@
+pre {
+    max-width: 80%;
+    white-space: normal;
+}
+
+mat-list-item {
+    border-bottom: solid 1px gray;
+}
+
+.muted {
+    color: silver;
+}
+
+h4 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.filter {
+    width: 50%;
+}
