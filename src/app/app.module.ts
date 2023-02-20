@@ -29,6 +29,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { PcMainComponent } from './pc-main/pc-main.component';
 import { MatCardModule } from '@angular/material/card';
 import { RefineTargetComponent } from './refine-target/refine-target.component';
+import { ScgHighlightingPipe } from './pipes/scg-highlighting.pipe';
+import { MatChipsModule } from '@angular/material/chips';
+import { ClinicalViewComponent } from './clinical-view/clinical-view.component';
+
 
 
 
@@ -41,7 +45,9 @@ import { RefineTargetComponent } from './refine-target/refine-target.component';
     BindingDetailsComponent,
     DropdownBindingComponent,
     PcMainComponent,
-    RefineTargetComponent
+    RefineTargetComponent,
+    ScgHighlightingPipe,
+    ClinicalViewComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +71,8 @@ import { RefineTargetComponent } from './refine-target/refine-target.component';
     ClipboardModule,
     MatMenuModule,
     MatTooltipModule,
-    MatCardModule
+    MatCardModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

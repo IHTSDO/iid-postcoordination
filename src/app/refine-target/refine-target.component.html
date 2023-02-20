@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Refining: {{data.title}}</h1>
-<mat-form-field class="filter">
+<mat-form-field class="filter   ">
     <mat-label>Filter options</mat-label>
     <input matInput [formControl]="formControl">
 </mat-form-field>
@@ -9,7 +9,9 @@
     <mat-selection-list dense [multiple]="false">
         <mat-list-option *ngFor="let item of (autoFilter | async)?.expansion?.contains" (click)="close(item);">
             <!-- [mat-dialog-close]="item" -->
-            {{ item.display }} &nbsp;-&nbsp; <span class="muted">{{ item.code }}</span>
+            <span>
+                {{ item.display }} &nbsp;-&nbsp; <span class="muted">{{ item.code }}</span>
+            </span>
         </mat-list-option>
         <mat-list-item *ngIf="loading">
             <mat-spinner [diameter]="20"></mat-spinner>

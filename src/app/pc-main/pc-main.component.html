@@ -34,7 +34,7 @@
             <mat-card class="code-card">
                 <mat-card-title>Close to user form</mat-card-title>
                 <mat-card-content>
-                    <pre class="code">{{ closeToUserForm }}</pre>
+                    <p class="code" [innerHTML]="getSafeHtml(closeToUserForm)"></p>
                 </mat-card-content>
             </mat-card>
             <mat-card class="code-card">

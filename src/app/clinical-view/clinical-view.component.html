@@ -1,0 +1,14 @@
+<mat-card class="main-card">
+    <mat-card-title>Postcoordination in the clinical setting</mat-card-title>
+    <mat-card-content>
+        <h3>Upper limb fracture</h3>
+        <mat-form-field class="single-field">
+            <mat-label>Bone</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let bone of bones" [value]="bone">
+                {{bone.display}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-card-content>
+</mat-card>

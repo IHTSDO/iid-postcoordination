@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ScgHighlightingPipe } from '../pipes/scg-highlighting.pipe';
 import { RefineTargetComponent } from '../refine-target/refine-target.component';
 import { TerminologyService } from '../services/terminology.service';
 
@@ -46,7 +48,7 @@ export class PcMainComponent implements OnInit {
     preloadedRange: []
   }
 
-  constructor(private terminologyService: TerminologyService, public dialog: MatDialog) { }
+  constructor(private terminologyService: TerminologyService, public dialog: MatDialog, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.terminologyService.expandValueSet(this.severity.range,'').subscribe((data: any) => {
@@ -55,6 +57,11 @@ export class PcMainComponent implements OnInit {
     this.terminologyService.expandValueSet(this.laterality.range,'').subscribe((data: any) => {
       this.laterality.preloadedRange = data.expansion?.contains;
     });
+  }
+
+  getSafeHtml(input: string) {
+    const transformed = new ScgHighlightingPipe().transform(input);
+    return this.sanitizer.bypassSecurityTrustHtml(transformed);
   }
 
   setSeverity(severity: any) {
@@ -103,6 +110,9 @@ export class PcMainComponent implements OnInit {
       }
       form = form + "\t" + qualification.attribute + " = " + qualification.code + " |" + qualification.display + "|";
     });
+    // update form to add a space before a pipe character only if the previous character is a digit
+    form = form.replace(/(\d)\|/g, '$1 |');
+
     this.closeToUserForm = form;
   }
 
@@ -123,6 +133,9 @@ export class PcMainComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        // remove element from selectedQualifications that matches the same attribute.attribute
+        this.selectedQualifications = this.selectedQualifications.filter((qualification: any) => qualification.attribute !== result.attribute?.attribute);
+
         this.selectedQualifications.push({attribute: result.attribute?.attribute, display: result.display, code: result.code});
         this.generateCloseToUserForm();
       }
