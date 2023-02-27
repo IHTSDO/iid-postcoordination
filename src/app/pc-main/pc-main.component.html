@@ -6,6 +6,7 @@
             <div class="buttons">
                 <button mat-flat-button color="primary" [matMenuTriggerFor]="addMenu" [disabled]="!(addOptions.length > 0)">Qualify</button>
                 <button mat-flat-button color="primary" [matMenuTriggerFor]="refineMenu" [disabled]="!(refineOptions.length > 0)">Refine</button>
+                <button mat-flat-button color="primary" [matMenuTriggerFor]="mrcmMenu" [disabled]="!(mrcmAttributes?.items?.length > 0)">MRCM</button>
                 <mat-spinner [diameter]="30" color="accent" *ngIf="loadingPcOptions"></mat-spinner>
                 <!-- <button mat-icon-button color="accent" [matMenuTriggerFor]="pcMenu" *ngIf="(addOptions.length || refineOptions.length) && !loadingPcOptions">
                     <mat-icon>edit</mat-icon>
@@ -26,6 +27,11 @@
                 </mat-menu>
                 <mat-menu #refineMenu="matMenu">
                     <button mat-menu-item *ngFor="let pcOption of refineOptions" (click)="openPcDialog(pcOption)">{{ pcOption.title }}</button>
+                </mat-menu>
+                <mat-menu #mrcmMenu="matMenu">
+                    <button mat-menu-item *ngFor="let mrcmOption of mrcmAttributes.items" (click)="openMrcmDialog(mrcmOption)">
+                        {{ mrcmOption.fsn.term }}
+                    </button>
                 </mat-menu>
             </div>
         </div>

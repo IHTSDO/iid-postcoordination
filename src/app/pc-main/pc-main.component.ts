@@ -48,6 +48,9 @@ export class PcMainComponent implements OnInit {
     preloadedRange: []
   }
 
+  mrcmAttributes: any = {};
+  loadingMrcmAttributes = false;
+
   constructor(private terminologyService: TerminologyService, public dialog: MatDialog, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
@@ -116,6 +119,33 @@ export class PcMainComponent implements OnInit {
     this.closeToUserForm = form;
   }
 
+  openMrcmDialog(attribute: any): void {
+    let refBinding: any = {
+      title: attribute.fsn.term,
+      type: 'dropdown',
+      ecl: attribute.attributeRange[0]?.rangeConstraint,
+      value: '',
+      note: '',
+      attribute: { attribute: attribute.idAndFsnTerm }
+    };
+    refBinding.attribute.attribute = refBinding.attribute.attribute.replace(/\| (.*) \|/g, '|$1|');
+    const dialogRef = this.dialog.open(RefineTargetComponent, {
+      height: '90%',
+      width: '70%',
+      data: refBinding
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // remove element from selectedQualifications that matches the same attribute.attribute
+        this.selectedQualifications = this.selectedQualifications.filter((qualification: any) => qualification.attribute !== result.attribute?.attribute);
+
+        this.selectedQualifications.push({attribute: result.attribute?.attribute, display: result.display, code: result.code});
+        this.generateCloseToUserForm();
+      }
+    });
+  }
+
   openPcDialog(attribute: any): void {
     let refBinding: any = {
       title: attribute.title,
@@ -146,7 +176,15 @@ export class PcMainComponent implements OnInit {
     // We assume it's a clinical finding
     this.addOptions = [];
     this.refineOptions = [];
+    this.mrcmAttributes = {};
     this.loadingPcOptions = true;
+    this.loadingMrcmAttributes = true;
+    this.terminologyService.getMRCMAttributes(concept.code).subscribe((data: any) => {
+      this.mrcmAttributes = data;
+      // sort this.mrcmAttributes.items by fsn.term
+      this.mrcmAttributes.items.sort((a: any, b: any) => a.fsn.term.localeCompare(b.fsn.term));
+      this.loadingMrcmAttributes = false;
+    });
     this.terminologyService.lookupConcept(concept.code).subscribe((data: any) => {
       let normalForm = '';
       data.parameter.forEach((param: any) => {

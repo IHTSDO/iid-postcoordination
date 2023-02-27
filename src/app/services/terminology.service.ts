@@ -86,4 +86,13 @@ export class TerminologyService {
         catchError(this.handleError<any>('lookupConcept', {}))
       );
   }
+
+  getMRCMAttributes(conceptId: string) {
+    // https://snowstorm.ihtsdotools.org/snowstorm/snomed-ct/mrcm/MAIN/domain-attributes?parentIds=195967001&proximalPrimitiveModeling=false&contentType=POSTCOORDINATED
+    let requestUrl = `${this.snowstormFhirBase.replace('fhir','')}mrcm/MAIN/domain-attributes?parentIds=${conceptId}&proximalPrimitiveModeling=false&contentType=POSTCOORDINATED`;
+    return this.http.get<any>(requestUrl)
+    .pipe(
+      catchError(this.handleError<any>('getMRCMAttributes', {}))
+    );
+  }
 }
