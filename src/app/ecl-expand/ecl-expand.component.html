@@ -1,6 +1,9 @@
 <mat-form-field class="example-full-width">
     <mat-label>ECL Expression</mat-label>
     <textarea matInput placeholder="Enter the ECL expression to expand..." rows="5" [(ngModel)]="ecl"></textarea>
+    <button mat-icon-button [cdkCopyToClipboard]="ecl" *ngIf="ecl" id="copy-icon" matTooltip="Copy to clipboard" class="muted">
+        <mat-icon>content_copy</mat-icon>
+    </button>
 </mat-form-field>
 <button mat-flat-button color="primary" (click)="loadExpansion(true)">Expand</button>
 <br>
@@ -11,9 +14,9 @@
         </mat-card-title>
         <mat-card-content>
             <span *ngIf="!loading">{{preExpansionLength}} of {{preTotal}}</span>
-            <mat-list dense>
+            <mat-list dense *ngIf="preExpansion && preExpansion.length > 0">
                 <mat-list-item *ngFor="let item of preExpansion">
-                    {{ item.display }} &nbsp;-&nbsp; <span class="muted">{{ item.code }}</span>
+                    {{ item?.display }} &nbsp;-&nbsp; <span class="muted">{{ item?.code }}</span>
                 </mat-list-item>
                 <button mat-button color="primary" *ngIf="preTotal > preExpansionLength && !loading" (click)="loadPage()">
                     {{preTotal - preExpansionLength}} concepts remaining. Click to load more...

@@ -26,6 +26,7 @@ export class PcMainComponent implements OnInit {
   selectedQualifications: any[] = [];
   closeToUserForm = "";
   classifiableForm = "";
+  ecl: string = "";
 
   addOptions: any[] = [];
   refineOptions: any[] = [];
@@ -117,6 +118,7 @@ export class PcMainComponent implements OnInit {
     form = form.replace(/(\d)\|/g, '$1 |');
 
     this.closeToUserForm = form;
+    this.ecl = "<< " + this.closeToUserForm;
   }
 
   openMrcmDialog(attribute: any): void {
@@ -198,47 +200,48 @@ export class PcMainComponent implements OnInit {
       // The refinement is the rest of the string in normalForm after the symbol ':'
       let refinement = normalForm.split(':')[1];
       // the groups are all the substrings enclosed in {}
-      let groups = refinement.match(/{(.*?)}/g);
+      let groups = refinement?.match(/{(.*?)}/g);
       // the attributes are all the substrings og the groups split by commas, as a single array
       let attributes = groups?.map((group: string) => group.split(/(?<=\|),/gm)).flat();
       // remove all the curly braces and trim the strings
       attributes = attributes?.map((attribute: string) => attribute.replace(/{|}/g, '').trim());
       this.severity.enabled = true;
       this.laterality.enabled = true;
-      attributes?.forEach(async (attribute: string) => {
-        let attType = attribute.split('=')[0].trim();
-        let attTypeCode = attType.split('|')[0].trim();
-        // Disables laterality and severity if they are already present in the refinement
-        if (attTypeCode === '246112005') {
-          this.severity.enabled = false;
-        } else if (attTypeCode === '272741003') {
-          this.laterality.enabled = false;
-        }
-        let isLateralizable = await this.terminologyService.expandValueSet(
-          '<< 404684003 |Clinical finding (finding)| : << 363698007 |Finding site (attribute)| = ^723264001 |Lateralizable body structure reference set (foundation metadata concept)|',
-          concept.code,0,1).toPromise();
-          this.laterality.enabled = isLateralizable?.expansion?.total === 1;
-        let attTypeDisplay = attType.split('|')[1].trim();
-        let attTypeDisplayNoSemtag = attTypeDisplay.substring(0, attTypeDisplay.indexOf('(')-1).trim();
-        let attValue = attribute.split('=')[1].trim();
-        let attValueCode = attValue.split('|')[0].trim();
-        let attValueDisplay = attValue.split('|')[1].trim();
-        let attValueDisplayNoSemtag = attValueDisplay.substring(0, attValueDisplay.indexOf('(')-1).trim();
-        this.refineOptions.push({
-          title: attTypeDisplayNoSemtag + ' → ' + attValueDisplayNoSemtag,
-          attribute: attType,
-          range: "<< " + attValue
+      if (attributes) {
+        attributes?.forEach(async (attribute: string) => {
+          let attType = attribute.split('=')[0].trim();
+          let attTypeCode = attType.split('|')[0].trim();
+          // Disables laterality and severity if they are already present in the refinement
+          if (attTypeCode === '246112005') {
+            this.severity.enabled = false;
+          } else if (attTypeCode === '272741003') {
+            this.laterality.enabled = false;
+          }
+          let isLateralizable = await this.terminologyService.expandValueSet(
+            '<< 404684003 |Clinical finding (finding)| : << 363698007 |Finding site (attribute)| = ^723264001 |Lateralizable body structure reference set (foundation metadata concept)|',
+            concept.code,0,1).toPromise();
+            this.laterality.enabled = isLateralizable?.expansion?.total === 1;
+          let attTypeDisplay = attType.split('|')[1].trim();
+          let attTypeDisplayNoSemtag = attTypeDisplay.substring(0, attTypeDisplay.indexOf('(')-1).trim();
+          let attValue = attribute.split('=')[1].trim();
+          let attValueCode = attValue.split('|')[0].trim();
+          let attValueDisplay = attValue.split('|')[1].trim();
+          let attValueDisplayNoSemtag = attValueDisplay.substring(0, attValueDisplay.indexOf('(')-1).trim();
+          this.refineOptions.push({
+            title: attTypeDisplayNoSemtag + ' → ' + attValueDisplayNoSemtag,
+            attribute: attType,
+            range: "<< " + attValue
+          });
+          this.addOptions = [ this.severity, this.laterality ];
+          // Remove duplicate objects in refineOptions
+          this.refineOptions = this.refineOptions.filter((v,i,a)=>a.findIndex(t=>(t.title === v.title))===i);
+          this.loadingPcOptions = false;
         });
-        this.addOptions = [ this.severity, this.laterality ];
-        // Remove duplicate objects in refineOptions
-        this.refineOptions = this.refineOptions.filter((v,i,a)=>a.findIndex(t=>(t.title === v.title))===i);
+      } else {
         this.loadingPcOptions = false;
-      });
+      }
+      
     });
   }
 
 }
-
-// let attributes = groups?.map((group: any) => {
-//   return group.split(',');
-// });

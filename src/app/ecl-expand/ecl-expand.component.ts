@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TerminologyService } from '../services/terminology.service';
 
 @Component({
@@ -8,11 +8,13 @@ import { TerminologyService } from '../services/terminology.service';
 })
 export class EclExpandComponent implements OnInit {
 
+  @Input() ecl: string = '';
+
   expansion: any[] | undefined;
   total: any = 0;
   expansionLength = 0;
   expandUrl = '';
-  ecl: string = '';
+  // ecl: string = '';
 
   loading = false;
   preExpansion: any[] | undefined;
@@ -56,7 +58,8 @@ export class EclExpandComponent implements OnInit {
       }
       this.preTotal = this.total;
       this.preExpansion = this.expansion;
-      this.preExpansionLength = this.expansionLength;
+      // Set preExpansionLength to the length of the preExpansion array or total, whichever is lowest
+      this.preExpansionLength = (this.preExpansion) ? Math.min(this.preExpansion.length, this.preTotal) : 0;
       this.loading = false;
     } );
   }

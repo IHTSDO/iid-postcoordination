@@ -1,5 +1,5 @@
 <mat-card class="main-card">
-    <mat-card-title>Postcoodination data entry</mat-card-title>
+    <mat-card-title>Postcoordination data entry</mat-card-title>
     <mat-card-content>
         <div class="focus-concept">
             <app-autocomplete-binding [binding]="binding" (selectionChange)="setSelectedConcept($event)" class="autocomplete"></app-autocomplete-binding>
@@ -40,7 +40,7 @@
             <mat-card class="code-card">
                 <mat-card-title>Close to user form</mat-card-title>
                 <mat-card-content>
-                    <button mat-icon-button [cdkCopyToClipboard]="closeToUserForm" *ngIf="closeToUserForm" id="copy-icon" matTooltip="Copy to clipboard">
+                    <button mat-icon-button [cdkCopyToClipboard]="closeToUserForm" *ngIf="closeToUserForm" id="copy-icon" matTooltip="Copy to clipboard" class="muted">
                         <mat-icon>content_copy</mat-icon>
                     </button>
                     <p class="code" [innerHTML]="getSafeHtml(closeToUserForm)"></p>
@@ -49,7 +49,7 @@
             <mat-card class="code-card">
                 <mat-card-title>Classifiable form</mat-card-title>
                 <mat-card-content>
-                    <button mat-icon-button [cdkCopyToClipboard]="classifiableForm" *ngIf="classifiableForm" id="copy-icon" matTooltip="Copy to clipboard">
+                    <button mat-icon-button [cdkCopyToClipboard]="classifiableForm" *ngIf="classifiableForm" id="copy-icon" matTooltip="Copy to clipboard" class="muted">
                         <mat-icon>content_copy</mat-icon>
                     </button>
                     <p class="code" [innerHTML]="getSafeHtml(classifiableForm)"></p>
@@ -60,7 +60,7 @@
             <mat-card class="ecl-card">
                 <mat-card-title>ECL Results</mat-card-title>
                 <mat-card-content>
-                    <app-ecl-expand></app-ecl-expand>
+                    <app-ecl-expand [ecl]="ecl"></app-ecl-expand>
                 </mat-card-content>
             </mat-card>
         </div>
