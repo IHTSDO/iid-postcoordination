@@ -72,3 +72,9 @@
     padding: 10px;
     background-color: white;
 }
+
+#copy-icon {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}

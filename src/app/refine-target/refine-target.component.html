@@ -7,15 +7,15 @@
     <span *ngIf="loading">-</span>)</h4>
 <div mat-dialog-content>
     <mat-selection-list dense [multiple]="false">
+        <mat-list-item *ngIf="loading">
+            <mat-spinner [diameter]="20"></mat-spinner>
+        </mat-list-item>
         <mat-list-option *ngFor="let item of (autoFilter | async)?.expansion?.contains" (click)="close(item);">
             <!-- [mat-dialog-close]="item" -->
             <span>
                 {{ item.display }} &nbsp;-&nbsp; <span class="muted">{{ item.code }}</span>
             </span>
         </mat-list-option>
-        <mat-list-item *ngIf="loading">
-            <mat-spinner [diameter]="20"></mat-spinner>
-        </mat-list-item>
     </mat-selection-list>
 </div>
 <div mat-dialog-actions>
