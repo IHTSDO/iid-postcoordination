@@ -47,6 +47,14 @@
 
 .code-card {
     flex: 1;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    padding: 10px;
+}
+
+.ecl-card {
+    flex: 1;
     background-color: #f5f5f5;
     border-radius: 5px;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
@@ -55,12 +63,12 @@
 
 /* style for displaying source code */
 .code {
-    min-height: 300px;
+    min-height: 150px;
     font-family: 'Courier New', Courier, monospace;
     font-size: 14px;
     white-space: pre-wrap;
     word-wrap: break-word;
     line-height: 1.5;
     padding: 10px;
-    background-color: #f5f5f5;
+    background-color: white;
 }

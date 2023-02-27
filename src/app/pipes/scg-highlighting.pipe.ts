@@ -5,16 +5,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ScgHighlightingPipe implements PipeTransform {
     transform(value: string): string {
-        const parts = value.split(/(\|.*?\|)/g);
-
-        // Loop through the parts of the string and wrap each part in a span with a different color
-        const result = parts.reduce((acc, part, index) => {
-            const color = index % 2 === 0 ? 'black' : 'green';
-            return acc + (part.startsWith('|') && part.endsWith('|')
-            ? `<span style="color: ${color}">${part}</span>`
-            : part);
-        }, '');
-
+        const digitRegex = /(\d+) \|/g;
+        const digitReplacement = '<span style="color: darkgrey">$1</span> |';
+        const aquaRegex = /\|/g;
+        const aquaReplacement = '<span style="color: aqua">$&</span>';
+        const result = value.replace(digitRegex, digitReplacement).replace(aquaRegex, aquaReplacement);
         return result;
     }
 }

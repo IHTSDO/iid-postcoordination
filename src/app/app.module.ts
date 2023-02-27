@@ -32,6 +32,7 @@ import { RefineTargetComponent } from './refine-target/refine-target.component';
 import { ScgHighlightingPipe } from './pipes/scg-highlighting.pipe';
 import { MatChipsModule } from '@angular/material/chips';
 import { ClinicalViewComponent } from './clinical-view/clinical-view.component';
+import { EclExpandComponent } from './ecl-expand/ecl-expand.component';
 
 
 
@@ -47,7 +48,8 @@ import { ClinicalViewComponent } from './clinical-view/clinical-view.component';
     PcMainComponent,
     RefineTargetComponent,
     ScgHighlightingPipe,
-    ClinicalViewComponent
+    ClinicalViewComponent,
+    EclExpandComponent
   ],
   imports: [
     BrowserModule,
