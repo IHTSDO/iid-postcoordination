@@ -33,6 +33,8 @@ import { ScgHighlightingPipe } from './pipes/scg-highlighting.pipe';
 import { MatChipsModule } from '@angular/material/chips';
 import { ClinicalViewComponent } from './clinical-view/clinical-view.component';
 import { EclExpandComponent } from './ecl-expand/ecl-expand.component';
+import { WristFractureComponent } from './wrist-fracture/wrist-fracture.component';
+import { OdontogramComponent } from './odontogram/odontogram.component';
 
 
 
@@ -49,7 +51,9 @@ import { EclExpandComponent } from './ecl-expand/ecl-expand.component';
     RefineTargetComponent,
     ScgHighlightingPipe,
     ClinicalViewComponent,
-    EclExpandComponent
+    EclExpandComponent,
+    WristFractureComponent,
+    OdontogramComponent
   ],
   imports: [
     BrowserModule,

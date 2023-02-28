@@ -1,0 +1,42 @@
+<mat-card class="clinical">
+    <mat-card-title>Enter odontogram findings</mat-card-title>
+    <mat-card-content>
+      <button mat-icon-button color="primary" id="info-button" matTooltip="{{closeToUserFormForDisplay}}">
+        <mat-icon>info</mat-icon>
+      </button>   
+      <div class="v-container">
+        <mat-form-field class="single-field">
+            <mat-label>Finding</mat-label>
+            <mat-select [(ngModel)]="selectedToothFinding" (selectionChange)="generateCloseToUserForm()">
+                <input matInput (keyup)="onKeyFinding($event)" class="teeth-filter" placeholder="Type to filter...">
+                <mat-option [value]="null" class="muted">[Not applicable]</mat-option>
+                <mat-option *ngFor="let item of filteredToothFindings" [value]="item">
+                {{item.display}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="single-field">
+          <mat-label>Tooth</mat-label>
+            <mat-select [(ngModel)]="selectedTooth" (selectionChange)="generateCloseToUserForm()">
+                <input matInput (keyup)="onKeyTooth($event)" class="teeth-filter" placeholder="Type to filter...">
+                <mat-option [value]="null" class="muted">[Not applicable]</mat-option>
+                <mat-option *ngFor="let item of filteredTeeth" [value]="item">
+                {{item.display}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="single-field">
+            <mat-label>Surface</mat-label>
+            <mat-select [(ngModel)]="selectedToothSurface" (selectionChange)="generateCloseToUserForm()">
+                <mat-option [value]="null" class="muted">[Not applicable]</mat-option>
+                <mat-option *ngFor="let item of toothSurfaces" [value]="item">
+                {{item.display}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="actions">
+      <button mat-flat-button color="primary" (click)="clean()" class="action">Clean</button>
+    </mat-card-actions>
+  </mat-card>

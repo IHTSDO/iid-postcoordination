@@ -87,3 +87,23 @@
 .muted {
     color: #9e9e9e;
 }
+
+:host /deep/ .mat-tab-group {
+    flex-direction: row;
+}
+:host /deep/ .mat-tab-header {
+border-bottom: none;
+}
+:host /deep/ .mat-tab-header-pagination {
+display: none !important;
+}
+:host /deep/ .mat-tab-labels {
+flex-direction: column;
+}
+:host /deep/ .mat-ink-bar {
+height: 100%;
+left: 98% !important;
+}
+:host /deep/ .mat-tab-body-wrapper {
+flex: 1 1 auto;
+}

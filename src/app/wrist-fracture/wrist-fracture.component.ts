@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { ScgHighlightingPipe } from '../pipes/scg-highlighting.pipe';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-clinical-view',
-  templateUrl: './clinical-view.component.html',
-  styleUrls: ['./clinical-view.component.css']
+  selector: 'app-wrist-fracture',
+  templateUrl: './wrist-fracture.component.html',
+  styleUrls: ['./wrist-fracture.component.css']
 })
-export class ClinicalViewComponent implements OnInit {
+export class WristFractureComponent implements OnInit {
+
+  @Output() closeToUserForm = new EventEmitter<string>();
 
   bones: any[] = [
     { code: "75129005", display: "Bone structure of distal radius (body structure)", attribute: "363698007 |Finding site (attribute)|" },
@@ -30,32 +30,16 @@ export class ClinicalViewComponent implements OnInit {
     { code: "442085002", display: "Greenstick fracture (morphologic abnormality)", attribute: "116676008 |Associated morphology (attribute)|" },
   ]
 
-  fracture = "116676008 |Associated morphology (attribute)| = 72704001 |Fracture (morphologic abnormality)|";
-
   closeToUserFormRoot = "125605004 |Fracture of bone (disorder)|";
-  closeToUserForm = this.closeToUserFormRoot;
   selectedBone: any;
   selectedDisplacementMorph: any;
   selectedFractureMorph: any;
   selectedFractureMorph2: any;
-  ecl: string = "<< " + this.closeToUserForm;
+  closeToUserFormForDisplay = "Close to user form:   " + this.closeToUserFormRoot;
 
-  constructor(private sanitizer: DomSanitizer) { }
+  constructor() { }
 
   ngOnInit(): void {
-  }
-
-  getSafeHtml(input: string) {
-    const transformed = new ScgHighlightingPipe().transform(input);
-    return this.sanitizer.bypassSecurityTrustHtml(transformed);
-  }
-
-  clean() {
-    this.selectedBone = undefined;
-    this.selectedDisplacementMorph = undefined;
-    this.selectedFractureMorph = undefined;
-    this.selectedFractureMorph2 = undefined;
-    this.generateCloseToUserForm();
   }
 
   generateCloseToUserForm() {
@@ -73,11 +57,6 @@ export class ClinicalViewComponent implements OnInit {
       if (!form.endsWith(":\n")) {
         form = form + " ,\n";
       }
-      // if (!this.selectedBone)  {
-      //   form = form + "\t {" + "363698007 |Finding site (attribute)| = 272673000 |Bone structure (body structure)| ," + "\n";
-      // } else {
-      //   form = form + "\t {" + this.selectedBone.attribute + " = " + this.selectedBone.code + " |" + this.selectedBone.display + "| ,\n";
-      // }  
       form = form + "\t" + this.selectedDisplacementMorph.attribute + " = " + this.selectedDisplacementMorph.code + " |" + this.selectedDisplacementMorph.display + "|";
     }
     if (form.endsWith(":\n")) {
@@ -86,13 +65,16 @@ export class ClinicalViewComponent implements OnInit {
     }
     // update form to add a space before a pipe character only if the previous character is a digit
     form = form.replace(/(\d)\|/g, '$1 |');
-
-    
+    this.closeToUserFormForDisplay = "Close to user form:   " + form;
+    this.closeToUserForm.emit(form);
   }
 
-  updateCuf(form: string) {
-    this.closeToUserForm = form;
-    this.ecl = "<< " + this.closeToUserForm;
+  clean() {
+    this.selectedBone = undefined;
+    this.selectedDisplacementMorph = undefined;
+    this.selectedFractureMorph = undefined;
+    this.selectedFractureMorph2 = undefined;
+    this.generateCloseToUserForm();
   }
+
 }
-
