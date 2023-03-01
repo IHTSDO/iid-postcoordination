@@ -17,7 +17,8 @@ export class AppComponent {
   selectedEdition = 'Edition';
   selectedLanguage = 'en';
   fhirServers = [
-    { name: "SNOMED Public", url: "https://snowstorm.ihtsdotools.org/snowstorm/snomed-ct/fhir"},
+    { name: "SNOMED Dev IS", url: "https://dev-is-browser.ihtsdotools.org/fhir"},
+    { name: "SNOMED Public", url: "https://snowstorm.ihtsdotools.org/snowstorm/snomed-ct/fhir"}
   ];
   selectedServer = this.fhirServers[0];
 
@@ -41,17 +42,22 @@ export class AppComponent {
       this.editions = response.entry;
       let editionNames = new Set();
       this.editions.forEach(loopEdition => {
-        editionNames.add(loopEdition.resource.title.substr(0,loopEdition.resource.title.lastIndexOf(' ')));
+        if (loopEdition.resource.title) {
+          const loopName = loopEdition.resource.title.substr(0,loopEdition.resource.title.lastIndexOf(' ')).trim();
+          if (loopName) {
+            editionNames.add(loopName);
+          }
+        }
       });
       editionNames.forEach(editionName => {
         this.editionsDetails.push(
           {
             editionName: editionName,
-            editions: this.editions.filter( el => (el.resource.title.includes(editionName))).sort( this.compare )
+            editions: this.editions.filter( el => (el.resource.title?.includes(editionName))).sort( this.compare )
           }
         );
       });
-      const currentVerIndex = this.editionsDetails.findIndex(x => x.editionName === 'International Edition SNOMED CT release');
+      const currentVerIndex = this.editionsDetails.findIndex(x => (x.editionName === 'International Edition SNOMED CT release' || x.editionName === 'International'));
       if (currentVerIndex >= 0) {
         this.setEdition(this.editionsDetails[currentVerIndex].editions[0]);
       } else {

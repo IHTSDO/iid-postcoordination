@@ -244,4 +244,17 @@ export class PcMainComponent implements OnInit {
     });
   }
 
+  save() {
+    if (this.closeToUserForm) {
+      this.terminologyService.addPostcoordinatedExpression(this.closeToUserForm).subscribe((data: any) => {
+        console.log(data);
+        data?.concept?.property?.forEach((property: any) => {
+          if (property.name === 'humanReadableClassifiableForm') {
+            this.classifiableForm = property.valueString;
+          }
+        });
+      });
+    }
+  }
+
 }

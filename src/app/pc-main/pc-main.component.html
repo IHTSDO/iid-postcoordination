@@ -45,6 +45,9 @@
                     </button>
                     <p class="code" [innerHTML]="getSafeHtml(closeToUserForm)"></p>
                 </mat-card-content>
+                <mat-card-actions class="actions">
+                    <button mat-flat-button color="primary" (click)="save()" class="action" [disabled]="!(selectedConcept && (selectedLaterality || selectedQualifications.length > 0 || selectedSeverity))">Save</button>
+                </mat-card-actions>
             </mat-card>
             <mat-card class="code-card">
                 <mat-card-title>Classifiable form</mat-card-title>
