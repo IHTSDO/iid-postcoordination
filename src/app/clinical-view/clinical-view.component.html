@@ -6,8 +6,11 @@
             <mat-tab label="Wrist fracture">
               <app-wrist-fracture (closeToUserForm)="updateCuf($event)"></app-wrist-fracture>
             </mat-tab>
-            <mat-tab label="Odontogram">
+            <mat-tab label="Odontogram finding">
               <app-odontogram (closeToUserForm)="updateCuf($event)"></app-odontogram>
+            </mat-tab>
+            <mat-tab label="Odontogram procedure">
+              <app-odontogram-procedure (closeToUserForm)="updateCuf($event)"></app-odontogram-procedure>
             </mat-tab>
           </mat-tab-group>
           <!-- <mat-card class="h-code-card">

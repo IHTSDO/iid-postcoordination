@@ -1,6 +1,6 @@
 <mat-form-field class="example-full-width">
     <mat-label>ECL Expression</mat-label>
-    <textarea matInput placeholder="Enter the ECL expression to expand..." rows="5" [(ngModel)]="ecl"></textarea>
+    <textarea matInput placeholder="Enter the ECL expression to expand..." rows="7" [(ngModel)]="ecl"></textarea>
     <button mat-icon-button [cdkCopyToClipboard]="ecl" *ngIf="ecl" id="copy-icon" matTooltip="Copy to clipboard" class="muted">
         <mat-icon>content_copy</mat-icon>
     </button>

@@ -35,6 +35,7 @@ import { ClinicalViewComponent } from './clinical-view/clinical-view.component';
 import { EclExpandComponent } from './ecl-expand/ecl-expand.component';
 import { WristFractureComponent } from './wrist-fracture/wrist-fracture.component';
 import { OdontogramComponent } from './odontogram/odontogram.component';
+import { OdontogramProcedureComponent } from './odontogram-procedure/odontogram-procedure.component';
 
 
 
@@ -53,7 +54,8 @@ import { OdontogramComponent } from './odontogram/odontogram.component';
     ClinicalViewComponent,
     EclExpandComponent,
     WristFractureComponent,
-    OdontogramComponent
+    OdontogramComponent,
+    OdontogramProcedureComponent
   ],
   imports: [
     BrowserModule,
