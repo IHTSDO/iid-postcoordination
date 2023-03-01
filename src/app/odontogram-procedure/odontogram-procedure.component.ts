@@ -103,6 +103,14 @@ export class OdontogramProcedureComponent implements OnInit {
         name: this.procedureContext,
         value: this.selectedStatus,
       },
+      {
+        name: '408732007 |Subject relationship context|',
+        value: { code: '410604004', display: 'Subject of record'}
+      },
+      {
+        name: '408731000 |Temporal context|',
+        value: { code: '410512000', display: 'Current or specified time'}
+      }
     ];
 
     fields.forEach((field) => {
@@ -110,7 +118,7 @@ export class OdontogramProcedureComponent implements OnInit {
         if (!form.endsWith(":\n")) {
           form += " ,\n";
         }
-        form += `\t${ field.name } = ${ field.value.code } | ${ field.value.display }|`;
+        form += `\t${ field.name } = ${ field.value.code } |${ field.value.display }|`;
       }
     });
 
