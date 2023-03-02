@@ -104,12 +104,13 @@ export class ClinicalViewComponent implements OnInit {
       this.loadingPatch = true;
       this.classifiableForm = "";
       this.terminologyService.addPostcoordinatedExpression(this.closeToUserForm).subscribe((data: any) => {
-        console.log(data?.concept[0].property);
-        data?.concept[0].property?.forEach((property: any) => {
-          if (property.code === 'humanReadableClassifiableForm') {
-            this.classifiableForm = property.valueString;
-          }
-        });
+        if (data?.concept?.length > 0) {
+          data?.concept[0].property?.forEach((property: any) => {
+            if (property.code === 'humanReadableClassifiableForm') {
+              this.classifiableForm = property.valueString;
+            }
+          });
+        }
         this.loadingPatch = false;
       });
     }

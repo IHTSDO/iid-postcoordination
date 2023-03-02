@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ScgHighlightingPipe } from '../pipes/scg-highlighting.pipe';
 import { RefineTargetComponent } from '../refine-target/refine-target.component';
@@ -12,13 +13,24 @@ import { TerminologyService } from '../services/terminology.service';
 })
 export class PcMainComponent implements OnInit {
 
-  binding: any = {
+  findingsBinding: any = {
     title: 'Clinical finding',
     type: 'dropdown',
     ecl: `< 404684003 |Clinical finding (finding)|`,
     value: '',
     note: 'Clinical finding.'
   };
+
+  proceduresBinding: any = {
+    title: 'Procedure',
+    type: 'dropdown',
+    ecl: `< 71388002 |Procedure (procedure)|`,
+    value: '',
+    note: 'Procedure.'
+  };
+
+  binding = this.findingsBinding;
+  selectedBinding: string = "1";
 
   selectedConcept: any;
   selectedSeverity: any;
@@ -50,10 +62,45 @@ export class PcMainComponent implements OnInit {
     preloadedRange: []
   }
 
+  contextAttributes: any[] = [
+    {
+      title: 'Finding context',
+      attribute: '408729009 |Finding context|',
+      range: `<< 410514004 |Finding context value|`,
+      enabled: true,
+      hideInBinding: "2",
+      preloadedRange: []
+    },
+    {
+      title: 'Procedure context',
+      attribute: '408730004 |Procedure context|',
+      range: `<< 288532009 |Context values for actions (qualifier value)|`,
+      enabled: true,
+      hideInBinding: "1",
+      preloadedRange: []
+    },
+    {
+      title: 'Temporal context',
+      attribute: '408731000 |Temporal context|',
+      range: `<< 410510008 |Temporal context value| `,
+      enabled: true,
+      preloadedRange: []
+    },
+    {
+      title: 'Subject relationship context',
+      attribute: '408732007 |Subject relationship context|',
+      range: `<< 125676002 |Person|`,
+      enabled: true,
+      preloadedRange: []
+    }
+  ];
+  selectedContextAttributes: any[] = [];
+
   mrcmAttributes: any = {};
   loadingMrcmAttributes = false;
+  selfGroupedIds: any = ['260870009', '363702006', '42752001', '255234002', '288556008', '371881003', '263502005', '726633004'];
 
-  constructor(private terminologyService: TerminologyService, public dialog: MatDialog, private sanitizer: DomSanitizer) { }
+  constructor(private terminologyService: TerminologyService, public dialog: MatDialog, private sanitizer: DomSanitizer, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.terminologyService.expandValueSet(this.severity.range,'').subscribe((data: any) => {
@@ -79,6 +126,16 @@ export class PcMainComponent implements OnInit {
     this.generateCloseToUserForm();
   }
 
+  setBinding() {
+    setTimeout(() => {
+      if (this.selectedBinding === "1") {
+        this.binding = this.findingsBinding;
+      } else {
+        this.binding = this.proceduresBinding;
+      }
+    }, 500);
+  }
+
   setSelectedConcept(concept: any) {
     this.closeToUserForm = "";
     this.classifiableForm = "";
@@ -97,7 +154,7 @@ export class PcMainComponent implements OnInit {
     if (this.selectedConcept) {
       form = this.selectedConcept.code + " |" + this.selectedConcept.display + "|";
     }
-    if (this.selectedSeverity || this.selectedLaterality || this.selectedQualifications.length > 0) {
+    if (this.selectedSeverity || this.selectedLaterality || this.selectedQualifications.length > 0 || this.selectedContextAttributes.length > 0) {
       form = form + " :\n";
     }
     if (this.selectedSeverity) {
@@ -109,6 +166,12 @@ export class PcMainComponent implements OnInit {
       }
       form = form + "\t" + this.laterality.attribute + " = " + this.selectedLaterality.code + " |" + this.selectedLaterality.display + "|";
     }
+    this.selectedContextAttributes.forEach((contextAttribute: any) => {
+      if (!form.endsWith(":\n")) {
+        form = form + " ,\n";
+      }
+      form = form + "\t" + contextAttribute.attribute + " = " + contextAttribute.code + " |" + contextAttribute.display + "|";
+    });
     this.selectedQualifications.forEach((qualification: any) => {
       if (!form.endsWith(":\n")) {
         form = form + " ,\n";
@@ -175,6 +238,31 @@ export class PcMainComponent implements OnInit {
     });
   }
 
+  openContextDialog(attribute: any): void {
+    let refBinding: any = {
+      title: attribute.title,
+      type: 'dropdown',
+      ecl: attribute.range,
+      value: '',
+      note: '',
+      attribute: attribute
+    };
+    const dialogRef = this.dialog.open(RefineTargetComponent, {
+      height: '90%',
+      width: '70%',
+      data: refBinding
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // remove element from selectedContextAttributes that matches the same attribute.attribute
+        this.selectedContextAttributes = this.selectedContextAttributes.filter((qualification: any) => qualification.attribute !== result.attribute?.attribute);
+        this.selectedContextAttributes.push({attribute: result.attribute?.attribute, display: result.display, code: result.code});
+        this.generateCloseToUserForm();
+      }
+    });
+  }
+
   async generatePostcoordinationOptions(concept: any) {
     // We assume it's a clinical finding
     this.addOptions = [];
@@ -184,8 +272,11 @@ export class PcMainComponent implements OnInit {
     this.loadingMrcmAttributes = true;
     this.terminologyService.getMRCMAttributes(concept.code).subscribe((data: any) => {
       this.mrcmAttributes = data;
+      // remove all items from this.members whose conceptId is not in this.selfGroupedIds
+      this.mrcmAttributes.items = this.mrcmAttributes.items.filter((item: any) => this.selfGroupedIds.includes(item.conceptId));
       // sort this.mrcmAttributes.items by fsn.term
       this.mrcmAttributes.items.sort((a: any, b: any) => a.fsn.term.localeCompare(b.fsn.term));
+      console.log(this.mrcmAttributes);
       this.loadingMrcmAttributes = false;
     });
     this.terminologyService.lookupConcept(concept.code).subscribe((data: any) => {
@@ -218,10 +309,15 @@ export class PcMainComponent implements OnInit {
           } else if (attTypeCode === '272741003') {
             this.laterality.enabled = false;
           }
-          let isLateralizable = await this.terminologyService.expandValueSet(
-            '<< 404684003 |Clinical finding (finding)| : << 363698007 |Finding site (attribute)| = ^723264001 |Lateralizable body structure reference set (foundation metadata concept)|',
-            concept.code,0,1).toPromise();
-            this.laterality.enabled = isLateralizable?.expansion?.total === 1;
+          const lateralizableFindingsQuery = '<< 404684003 |Clinical finding (finding)| : << 363698007 |Finding site (attribute)| = ^723264001 |Lateralizable body structure reference set (foundation metadata concept)|';
+          const lateralizableProceduresQuery = '<< 71388002 |Procedure (procedure)| : << 363704007 |Procedure site (attribute)| = ^723264001 |Lateralizable body structure reference set (foundation metadata concept)|';
+          let latQuery = lateralizableFindingsQuery;
+          // Create latQuery variable equals to lateralizableFindingsQuery if selectedBinding == "1" else to lateralizableProceduresQuery
+          if (this.selectedBinding == "2") {
+            latQuery = lateralizableProceduresQuery;
+          }
+          let isLateralizable = await this.terminologyService.expandValueSet(latQuery, concept.code,0,1).toPromise();
+          this.laterality.enabled = isLateralizable?.expansion?.total === 1;
           let attTypeDisplay = attType.split('|')[1].trim();
           let attTypeDisplayNoSemtag = attTypeDisplay.substring(0, attTypeDisplay.indexOf('(')-1).trim();
           let attValue = attribute.split('=')[1].trim();
@@ -249,15 +345,17 @@ export class PcMainComponent implements OnInit {
     if (this.closeToUserForm) {
       this.loadingPatch = true;
       this.classifiableForm = "";
-      this.terminologyService.addPostcoordinatedExpression(this.closeToUserForm).subscribe((data: any) => {
-        console.log(data?.concept[0].property);
-        data?.concept[0].property?.forEach((property: any) => {
-          if (property.code === 'humanReadableClassifiableForm') {
-            this.classifiableForm = property.valueString;
+      this.terminologyService.addPostcoordinatedExpression(this.closeToUserForm).subscribe(
+        (data: any) => {
+          if (data?.concept?.length > 0) {
+            data?.concept[0].property?.forEach((property: any) => {
+              if (property.code === 'humanReadableClassifiableForm') {
+                this.classifiableForm = property.valueString;
+              }
+            });
           }
+          this.loadingPatch = false;
         });
-        this.loadingPatch = false;
-      });
     }
   }
 

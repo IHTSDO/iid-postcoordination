@@ -6,7 +6,7 @@
             <div class="buttons">
                 <button mat-flat-button color="primary" [matMenuTriggerFor]="addMenu" [disabled]="!(addOptions.length > 0)">Qualify</button>
                 <button mat-flat-button color="primary" [matMenuTriggerFor]="refineMenu" [disabled]="!(refineOptions.length > 0)">Refine</button>
-                <button mat-flat-button color="primary" [matMenuTriggerFor]="mrcmMenu" [disabled]="!(mrcmAttributes?.items?.length > 0)">MRCM</button>
+                <button mat-flat-button color="primary" [matMenuTriggerFor]="mrcmMenu" [disabled]="!(mrcmAttributes?.items?.length > 0)">Self grouped attributes</button>
                 <mat-spinner [diameter]="30" color="accent" *ngIf="loadingPcOptions"></mat-spinner>
                 <!-- <button mat-icon-button color="accent" [matMenuTriggerFor]="pcMenu" *ngIf="(addOptions.length || refineOptions.length) && !loadingPcOptions">
                     <mat-icon>edit</mat-icon>
@@ -16,14 +16,20 @@
                     <button mat-menu-item [matMenuTriggerFor]="refineMenu">Refine</button>
                 </mat-menu> -->
                 <mat-menu #addMenu="matMenu">
-                    <button mat-menu-item [matMenuTriggerFor]="sevMenu">Severity</button>
+                    <button mat-menu-item [matMenuTriggerFor]="sevMenu" *ngIf="selectedBinding == '1'">Severity</button>
                     <button mat-menu-item [matMenuTriggerFor]="latMenu" [disabled]="!addOptions[1]?.enabled">Laterality</button>
+                    <button mat-menu-item [matMenuTriggerFor]="ctxMenu">Context</button>
                 </mat-menu>
                 <mat-menu #sevMenu="matMenu">
                     <button mat-menu-item *ngFor="let sevOption of addOptions[0]?.preloadedRange" (click)="setSeverity(sevOption)">{{ sevOption.display }}</button>
                 </mat-menu>
                 <mat-menu #latMenu="matMenu">
                     <button mat-menu-item *ngFor="let latOption of addOptions[1]?.preloadedRange" (click)="setLaterality(latOption)">{{ latOption.display }}</button>
+                </mat-menu>
+                <mat-menu #ctxMenu="matMenu">
+                    <button mat-menu-item *ngFor="let ctxOption of contextAttributes" (click)="openContextDialog(ctxOption)" [disabled]="(ctxOption.hideInBinding == selectedBinding)">
+                        {{ ctxOption.title }}
+                    </button>
                 </mat-menu>
                 <mat-menu #refineMenu="matMenu">
                     <button mat-menu-item *ngFor="let pcOption of refineOptions" (click)="openPcDialog(pcOption)">{{ pcOption.title }}</button>
@@ -33,6 +39,10 @@
                         {{ mrcmOption.fsn.term }}
                     </button>
                 </mat-menu>
+                <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedBinding">
+                    <mat-radio-button value="1" (click)="setBinding()">Clinical findings&nbsp;&nbsp;</mat-radio-button>
+                    <mat-radio-button value="2" (click)="setBinding()">Procedures&nbsp;&nbsp;</mat-radio-button>
+                  </mat-radio-group>
             </div>
         </div>
         <!-- Two cards, side by side, that will contain preformatted code -->
@@ -47,7 +57,7 @@
                 </mat-card-content>
                 <mat-card-actions class="actions">
                     <button mat-flat-button color="primary" (click)="save()" class="action" 
-                    [disabled]="!(selectedConcept && (selectedLaterality || selectedQualifications.length > 0 || selectedSeverity))"
+                    [disabled]="!(selectedConcept && (selectedLaterality || selectedQualifications.length > 0 || selectedSeverity || selectedContextAttributes.length > 0))"
                     *ngIf="!loadingPatch">
                         Save
                     </button>

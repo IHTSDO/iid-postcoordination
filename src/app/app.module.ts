@@ -36,9 +36,9 @@ import { EclExpandComponent } from './ecl-expand/ecl-expand.component';
 import { WristFractureComponent } from './wrist-fracture/wrist-fracture.component';
 import { OdontogramComponent } from './odontogram/odontogram.component';
 import { OdontogramProcedureComponent } from './odontogram-procedure/odontogram-procedure.component';
-
-
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HttpErrorComponent } from './alerts/http-error';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -55,7 +55,8 @@ import { OdontogramProcedureComponent } from './odontogram-procedure/odontogram-
     EclExpandComponent,
     WristFractureComponent,
     OdontogramComponent,
-    OdontogramProcedureComponent
+    OdontogramProcedureComponent,
+    HttpErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +81,9 @@ import { OdontogramProcedureComponent } from './odontogram-procedure/odontogram-
     MatMenuModule,
     MatTooltipModule,
     MatCardModule,
-    MatChipsModule
+    MatChipsModule,
+    MatSnackBarModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

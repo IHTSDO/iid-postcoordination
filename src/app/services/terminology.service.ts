@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, of } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpErrorComponent } from '../alerts/http-error';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,7 @@ export class TerminologyService {
   fhirUrlParam = this.defaultFhirUrlParam;
   lang = 'en';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private _snackBar: MatSnackBar) { }
 
   setSnowstormFhirBase(url: string) {
     this.snowstormFhirBase = url;
@@ -68,7 +70,12 @@ export class TerminologyService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-  
+      console.error("There was an error!");
+      console.log(error);
+      this._snackBar.openFromComponent(HttpErrorComponent, {
+        duration: 5 * 1000,
+        data: error.message,
+      });
       // TODO: send the error to remote logging infrastructure
       // console.error(error); // log to console instead
   

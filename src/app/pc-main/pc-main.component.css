@@ -22,7 +22,7 @@
     width: 30%;
 }
 .buttons {
-    width: 30%;
+    width: 60%;
     /* Flex layout of external container */
     display: flex;
     flex-direction: row;
