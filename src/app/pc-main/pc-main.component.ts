@@ -32,6 +32,7 @@ export class PcMainComponent implements OnInit {
   refineOptions: any[] = [];
 
   loadingPcOptions = false;
+  loadingPatch = false;
 
   severity: any = {
     title: 'Severity',
@@ -246,13 +247,16 @@ export class PcMainComponent implements OnInit {
 
   save() {
     if (this.closeToUserForm) {
+      this.loadingPatch = true;
+      this.classifiableForm = "";
       this.terminologyService.addPostcoordinatedExpression(this.closeToUserForm).subscribe((data: any) => {
-        console.log(data);
-        data?.concept?.property?.forEach((property: any) => {
-          if (property.name === 'humanReadableClassifiableForm') {
+        console.log(data?.concept[0].property);
+        data?.concept[0].property?.forEach((property: any) => {
+          if (property.code === 'humanReadableClassifiableForm') {
             this.classifiableForm = property.valueString;
           }
         });
+        this.loadingPatch = false;
       });
     }
   }

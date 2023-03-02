@@ -13,14 +13,12 @@
               <app-odontogram-procedure (closeToUserForm)="updateCuf($event)"></app-odontogram-procedure>
             </mat-tab>
           </mat-tab-group>
-          <!-- <mat-card class="h-code-card">
-            <mat-card-content>
-              <button mat-icon-button [cdkCopyToClipboard]="closeToUserForm" *ngIf="closeToUserForm" id="copy-icon" matTooltip="Copy to clipboard" class="muted">
-                <mat-icon>content_copy</mat-icon>
-              </button>
-              <p class="code" [innerHTML]="getSafeHtml(closeToUserForm)"></p>
-            </mat-card-content>
-          </mat-card> -->
+          <button mat-flat-button color="primary" (click)="save()" class="action" 
+          [disabled]="false"
+          *ngIf="!loadingPatch">
+              Save
+          </button>
+          <mat-spinner [diameter]="30" color="accent" *ngIf="loadingPatch"></mat-spinner>
         </div>
         <div class="code-container">
           <mat-card class="ecl-card">

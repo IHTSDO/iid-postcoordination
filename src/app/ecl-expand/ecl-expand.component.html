@@ -9,13 +9,11 @@
 <br>
 <div class="expand-container">
     <mat-card class="expand-card">
-        <mat-card-title>
-            Precoordinated concepts
-        </mat-card-title>
+        <mat-card-title>Expansion result</mat-card-title>
         <mat-card-content>
             <span *ngIf="!loading">{{preExpansionLength}} of {{preTotal}}</span>
             <mat-list dense *ngIf="preExpansion && preExpansion.length > 0">
-                <mat-list-item *ngFor="let item of preExpansion">
+                <mat-list-item *ngFor="let item of preExpansion" [class.highlight]="item?.display.includes('|=|')">
                     {{ item?.display }} &nbsp;-&nbsp; <span class="muted">{{ item?.code }}</span>
                 </mat-list-item>
                 <button mat-button color="primary" *ngIf="preTotal > preExpansionLength && !loading" (click)="loadPage()">
@@ -28,15 +26,15 @@
         </mat-card-content>
     </mat-card>
     <mat-card class="expand-card">
-        <mat-card-title>Postcoordinated expressions</mat-card-title>
+        <mat-card-title>Equivalent concepts</mat-card-title>
         <mat-card-content>
-            <span *ngIf="!loading">{{posExpansionLength}} of {{posTotal}}</span>
+            <span *ngIf="!loading">{{equivalentsLength}} of {{equivalentsTotal}}</span>
             <mat-list dense>
-                <mat-list-item *ngFor="let item of posExpansion">
+                <mat-list-item *ngFor="let item of equivalents">
                     {{ item.display }} &nbsp;-&nbsp; <span class="muted">{{ item.code }}</span>
                 </mat-list-item>
-                <button mat-button color="primary" *ngIf="posTotal > posExpansionLength && !loading" (click)="loadPage()">
-                    {{posTotal - posExpansionLength}} concepts remaining. Click to load more...
+                <button mat-button color="primary" *ngIf="equivalentsTotal > equivalentsLength && !loading" (click)="loadPage()">
+                    {{equivalentsTotal - equivalentsLength}} concepts remaining. Click to load more...
                 </button>
                 <mat-list-item *ngIf="loading">
                     <mat-spinner [diameter]="20"></mat-spinner>

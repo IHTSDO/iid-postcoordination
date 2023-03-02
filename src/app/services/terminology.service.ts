@@ -54,6 +54,8 @@ export class TerminologyService {
   expandValueSetFromServer(fhirBase: string, fhirUrl: string, ecl: string, terms: string, offset?: number, count?:number): Observable<any> {
     if (!offset) offset = 0;
     if (!count) count = 20;
+    if (!fhirBase) fhirBase = this.snowstormFhirBase;
+    if (!fhirUrl) fhirUrl = this.fhirUrlParam;
     if (typeof terms != 'string') {
       terms = '';
     }
@@ -100,7 +102,7 @@ export class TerminologyService {
     let requestUrl = `${this.snowstormFhirBase}/CodeSystem/sct_11000003104_EXP`;
     const httpOptions = {
       headers: new HttpHeaders({
-        'Access-Control-Allow-Origin':  '*'
+        'Content-Type':  'application/fhir+json'
       })
     };
     return this.http.patch<any>(requestUrl, {resourceType: "CodeSystem", concept: [ { code: expression} ] }, httpOptions)

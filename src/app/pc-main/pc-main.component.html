@@ -46,7 +46,12 @@
                     <p class="code" [innerHTML]="getSafeHtml(closeToUserForm)"></p>
                 </mat-card-content>
                 <mat-card-actions class="actions">
-                    <button mat-flat-button color="primary" (click)="save()" class="action" [disabled]="!(selectedConcept && (selectedLaterality || selectedQualifications.length > 0 || selectedSeverity))">Save</button>
+                    <button mat-flat-button color="primary" (click)="save()" class="action" 
+                    [disabled]="!(selectedConcept && (selectedLaterality || selectedQualifications.length > 0 || selectedSeverity))"
+                    *ngIf="!loadingPatch">
+                        Save
+                    </button>
+                    <mat-spinner [diameter]="30" color="accent" *ngIf="loadingPatch"></mat-spinner>
                 </mat-card-actions>
             </mat-card>
             <mat-card class="code-card">

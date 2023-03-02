@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ScgHighlightingPipe } from '../pipes/scg-highlighting.pipe';
+import { TerminologyService } from '../services/terminology.service';
 
 @Component({
   selector: 'app-clinical-view',
@@ -40,7 +41,10 @@ export class ClinicalViewComponent implements OnInit {
   selectedFractureMorph2: any;
   ecl: string = "<< " + this.closeToUserForm;
 
-  constructor(private sanitizer: DomSanitizer) { }
+  loadingPatch = false;
+  classifiableForm = "";
+
+  constructor(private sanitizer: DomSanitizer, private terminologyService: TerminologyService) { }
 
   ngOnInit(): void {
   }
@@ -93,6 +97,22 @@ export class ClinicalViewComponent implements OnInit {
   updateCuf(form: string) {
     this.closeToUserForm = form;
     this.ecl = "<< " + this.closeToUserForm;
+  }
+
+  save() {
+    if (this.closeToUserForm) {
+      this.loadingPatch = true;
+      this.classifiableForm = "";
+      this.terminologyService.addPostcoordinatedExpression(this.closeToUserForm).subscribe((data: any) => {
+        console.log(data?.concept[0].property);
+        data?.concept[0].property?.forEach((property: any) => {
+          if (property.code === 'humanReadableClassifiableForm') {
+            this.classifiableForm = property.valueString;
+          }
+        });
+        this.loadingPatch = false;
+      });
+    }
   }
 }
 

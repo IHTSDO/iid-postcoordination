@@ -21,9 +21,9 @@ export class EclExpandComponent implements OnInit {
   preTotal: any = 0;
   preExpansionLength = 0;
 
-  posExpansion: any[] | undefined;
-  posTotal: any = 0;
-  posExpansionLength = 0;
+  equivalents: any[] | undefined;
+  equivalentsTotal: any = 0;
+  equivalentsLength = 0;
 
 
   constructor(public terminologyService: TerminologyService) { }
@@ -44,8 +44,8 @@ export class EclExpandComponent implements OnInit {
       offset = 0;
     }
     this.loading = true;
-    this.expandUrl = this.terminologyService.getValueSetExpansionUrl(this.ecl, '');
-    this.terminologyService.expandValueSet(this.ecl, '', offset, 20).subscribe(response => {
+    // this.expandUrl = this.terminologyService.getValueSetExpansionUrl(this.ecl, '');
+    this.terminologyService.expandValueSetFromServer('', 'http://snomed.info/xsct/11000003104', this.ecl, '', offset, 20).subscribe(response => {
       if (!response.issue) {
         this.expansion = this.expansion?.concat(response.expansion?.contains);
         this.total = response.expansion?.total;
