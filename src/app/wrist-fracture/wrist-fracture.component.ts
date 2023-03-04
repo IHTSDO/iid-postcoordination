@@ -43,21 +43,34 @@ export class WristFractureComponent implements OnInit {
   }
 
   generateCloseToUserForm() {
+    // Create the close to user form
+    // Use closeToUserFormRoot for focus concept
+    // if selectedBone use selectedBone.code for finding site in a rolegroup with fracture morpohology
+    // if selectedFractureMorph replace the code and display in the previous role group
+    // if selectedDisplacementMorph add a new rolegroup with the finding site and the displacement morphology
+
     let form = this.closeToUserFormRoot + ":\n";
+    let morph = "125605004 |Fracture of bone (disorder)|";
+    let bone = "272673000 |Bone structure (body structure)|";
+    let findingSite = "363698007 |Finding site (attribute)|";
+    let associatedMorphology = "116676008 |Associated morphology (attribute)|";
     if (this.selectedBone) {
-      form = form + "\t" + this.selectedBone.attribute + " = " + this.selectedBone.code + " |" + this.selectedBone.display + "|";
+      bone = this.selectedBone.code + " |" + this.selectedBone.display + "|";
     }
     if (this.selectedFractureMorph) {
-      if (!form.endsWith(":\n")) {
-        form = form + " ,\n";
-      }
-      form = form + "\t" + this.selectedFractureMorph.attribute + " = " + this.selectedFractureMorph.code + " |" + this.selectedFractureMorph.display + "|";
+      morph = this.selectedFractureMorph.code + " |" + this.selectedFractureMorph.display + "|";
+    }
+
+    if (this.selectedBone) {
+      form = form + "\t{" + this.selectedBone.attribute + " = " + this.selectedBone.code + " |" + this.selectedBone.display + "| ,\n";
+      form = form + "\t" + associatedMorphology + " = " + morph + " }";
     }
     if (this.selectedDisplacementMorph) {
       if (!form.endsWith(":\n")) {
         form = form + " ,\n";
       }
-      form = form + "\t" + this.selectedDisplacementMorph.attribute + " = " + this.selectedDisplacementMorph.code + " |" + this.selectedDisplacementMorph.display + "|";
+      form = form + "\t{" + findingSite + " = " + bone + " ,\n";
+      form = form + "\t" + this.selectedDisplacementMorph.attribute + " = " + this.selectedDisplacementMorph.code + " |" + this.selectedDisplacementMorph.display + "| }";
     }
     if (form.endsWith(":\n")) {
       // remove last 2 characters of the form

@@ -33,7 +33,7 @@ export class OdontogramProcedureComponent implements OnInit {
   associatedProcedure = "363589002 |Associated procedure|";
   directDevice = "363699004 |Direct device|";
   directMorphology = "363700003 |Direct morphology|";
-  procedureSite = "363704007 |Procedure site|";
+  procedureSite = "405813007 |Procedure site - Direct|";
   usingSubstance = "424361007 |Using substance|";
   procedureContext = "408730004 |Procedure context| ";
 
@@ -80,86 +80,32 @@ export class OdontogramProcedureComponent implements OnInit {
     this.closeToUserForm.emit(this.closeToUserFormRoot);
   }
 
-  // generateCloseToUserForm() {
-  //   let form = this.closeToUserFormRoot + " : {\n";
-  //   const fields = [
-  //     {
-  //       name: this.associatedProcedure,
-  //       value: this.selectedProcedure,
-  //     },
-  //     {
-  //       name: this.procedureSite,
-  //       value: this.selectedTooth,
-  //     },
-  //     {
-  //       name: this.directMorphology,
-  //       value: this.selectedMorphology,
-  //     },
-  //     {
-  //       name: this.usingSubstance,
-  //       value: this.selectedSubstance,
-  //     },
-  //     {
-  //       name: this.procedureContext,
-  //       value: this.selectedStatus,
-  //     },
-  //     {
-  //       name: '408732007 |Subject relationship context|',
-  //       value: { code: '410604004', display: 'Subject of record'}
-  //     },
-  //     {
-  //       name: '408731000 |Temporal context|',
-  //       value: { code: '410512000', display: 'Current or specified time'}
-  //     }
-  //   ];
-
-  //   fields.forEach((field) => {
-  //     if (field.value) {
-  //       if (!form.endsWith(": {\n")) {
-  //         form += " ,\n";
-  //       }
-  //       form += `\t${ field.name } = ${ field.value.code } |${ field.value.display }|`;
-  //     }
-  //   });
-
-
-  //   if (form.endsWith(": {\n")) {
-  //     form = form.slice(0, -4);
-  //   }
-  //   form = form + " }";
-  //   form = "=== " + form;
-  //   this.closeToUserFormForDisplay = `Close to user form: ${ form }`;
-  //   this.closeToUserForm.emit(form);
-  // }
   generateCloseToUserForm() {
     let form = this.closeToUserFormRoot + " :\n";
     if (this.selectedProcedure) {
-      if (!form.endsWith(":\n")) {
-        form = form + " ,\n";
-      }
-      form = form + "\t" + this.associatedProcedure + " = " + this.selectedProcedure.code + " |" + this.selectedProcedure.display + "|: {\n";
+      form = form + "\t { " + this.associatedProcedure + " = (" + this.selectedProcedure.code + " |" + this.selectedProcedure.display + "|: {\n";
       if (this.selectedTooth) {
         if (!form.endsWith(" {\n")) {
           form = form + " ,\n";
         }
-        form = form + "\t" + this.procedureSite + " = " + this.selectedTooth.code + " |" + this.selectedTooth.display + "|";
+        form = form + "\t\t" + this.procedureSite + " = " + this.selectedTooth.code + " |" + this.selectedTooth.display + "|";
       }
       if (this.selectedMorphology) {
         if (!form.endsWith(" {\n")) {
           form = form + " ,\n";
         }
-        form = form + "\t" + this.directMorphology + " = " + this.selectedMorphology.code + " |" + this.selectedMorphology.display + "|";
+        form = form + "\t\t" + this.directMorphology + " = " + this.selectedMorphology.code + " |" + this.selectedMorphology.display + "|";
       }
       if (this.selectedSubstance) {
         if (!form.endsWith(" {\n")) {
           form = form + " ,\n";
         }
-        form = form + "\t" + this.usingSubstance + " = " + this.selectedSubstance.code + " |" + this.selectedSubstance.display + "|";
+        form = form + "\t\t" + this.usingSubstance + " = " + this.selectedSubstance.code + " |" + this.selectedSubstance.display + "|";
       }
       if (form.endsWith(" {")) {
         form = form.substring(0, form.length - 2);
       } else  {
-        form = form + "},";
+        form = form + " })";
       } 
     }
     if (this.selectedStatus) {
@@ -172,9 +118,10 @@ export class OdontogramProcedureComponent implements OnInit {
       // remove last 2 characters of the form
       form = form.substring(0, form.length - 2);
     }
-    if (form.endsWith("},")) {
+    if (form.endsWith("\t\t},")) {
       form = form.substring(0, form.length - 1);
     } 
+    form = form + " }";
     // update form to add a space before a pipe character only if the previous character is a digit
     form = form.replace(/(\d)\|/g, '$1 |');
     this.closeToUserFormForDisplay = "Close to user form:   " + form;
