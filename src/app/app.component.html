@@ -3,7 +3,7 @@
   <span id="title">Postcoordination demonstrator</span>
   <span class="example-spacer"></span>
   
-  <button mat-raised-button color="primary" [matMenuTriggerFor]="serverMenu">FHIR Server: {{selectedServer.name}}</button>
+  <!-- <button mat-raised-button color="primary" [matMenuTriggerFor]="serverMenu">FHIR Server: {{selectedServer.name}}</button>
   <mat-menu #serverMenu="matMenu">
     <button mat-menu-item *ngFor="let server of fhirServers" (click)="setFhirServer(server)">{{server.name}}</button>
   </mat-menu>
@@ -21,11 +21,11 @@
   <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">{{selectedLanguage}}</button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item *ngFor="let language of languages" (click)="setLanguage(language)">{{language}}</button>
-  </mat-menu>
+  </mat-menu> -->
 
-  <button mat-raised-button color="primary" (click)="this.excelService.exportAsExcelFile(this.bindingsForExport, 'bindings')">
+  <!-- <button mat-raised-button color="primary" (click)="this.excelService.exportAsExcelFile(this.bindingsForExport, 'bindings')">
     <mat-icon>cloud_download</mat-icon>&nbsp;&nbsp;Export Bindings
-  </button>
+  </button> -->
 
   <a href="https://github.com/ihtsdo/iid-postcoordination" target="_blank" mat-raised-button color="primary"><mat-icon>info</mat-icon></a>
 
