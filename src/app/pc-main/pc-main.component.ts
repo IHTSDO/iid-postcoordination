@@ -38,6 +38,7 @@ export class PcMainComponent implements OnInit {
   selectedQualifications: any[] = [];
   closeToUserForm = "";
   classifiableForm = "";
+  necessaryNormalForm = "";
   ecl: string = "";
 
   addOptions: any[] = [];
@@ -182,7 +183,7 @@ export class PcMainComponent implements OnInit {
     form = form.replace(/(\d)\|/g, '$1 |');
 
     this.closeToUserForm = form;
-    this.ecl = "<< " + this.closeToUserForm;
+    // this.ecl = "<< " + this.closeToUserForm;
   }
 
   openMrcmDialog(attribute: any): void {
@@ -276,7 +277,6 @@ export class PcMainComponent implements OnInit {
       this.mrcmAttributes.items = this.mrcmAttributes.items.filter((item: any) => this.selfGroupedIds.includes(item.conceptId));
       // sort this.mrcmAttributes.items by fsn.term
       this.mrcmAttributes.items.sort((a: any, b: any) => a.fsn.term.localeCompare(b.fsn.term));
-      console.log(this.mrcmAttributes);
       this.loadingMrcmAttributes = false;
     });
     this.terminologyService.lookupConcept(concept.code).subscribe((data: any) => {
@@ -351,6 +351,11 @@ export class PcMainComponent implements OnInit {
             data?.concept[0].property?.forEach((property: any) => {
               if (property.code === 'humanReadableClassifiableForm') {
                 this.classifiableForm = property.valueString;
+                // extract first focus concept from classifiableForm, it's the substring before the colon, and after "===", trimmed
+                let focusConcept = this.classifiableForm.substring(this.classifiableForm.indexOf('===') + 3, this.classifiableForm.indexOf(':')).trim();
+                this.ecl = `<< ${focusConcept}`;
+              } else if (property.code === 'humanReadableNecessaryNormalForm') {
+                this.necessaryNormalForm = property.valueString;
               }
             });
           }
