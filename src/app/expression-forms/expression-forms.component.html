@@ -1,0 +1,14 @@
+<mat-tab-group>
+    <mat-tab label="Classifiable form">
+        <p class="code" [innerHTML]="getSafeHtml(classifiableForm)"></p>
+        <button mat-icon-button [cdkCopyToClipboard]="classifiableForm" *ngIf="classifiableForm" id="copy-icon" matTooltip="Copy to clipboard" class="muted">
+            <mat-icon>content_copy</mat-icon>
+        </button>
+    </mat-tab>
+    <mat-tab label="Necessary Normal Form">
+        <p class="code" [innerHTML]="getSafeHtml(necessaryNormalForm)"></p>
+        <button mat-icon-button [cdkCopyToClipboard]="necessaryNormalForm" *ngIf="necessaryNormalForm" id="copy-icon" matTooltip="Copy to clipboard" class="muted">
+            <mat-icon>content_copy</mat-icon>
+        </button>
+    </mat-tab>
+</mat-tab-group>

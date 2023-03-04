@@ -39,6 +39,10 @@ import { OdontogramProcedureComponent } from './odontogram-procedure/odontogram-
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpErrorComponent } from './alerts/http-error';
 import { MatRadioModule } from '@angular/material/radio';
+import { ExpressionSavedComponent } from './alerts/expression-saved';
+import { ExpressionFormsComponent } from './expression-forms/expression-forms.component';
+import { ClinicalFormsTabsComponent } from './clinical-forms-tabs/clinical-forms-tabs.component';
+import { SnackAlertComponent } from './alerts/snack-alert';
 
 @NgModule({
   declarations: [
@@ -56,7 +60,11 @@ import { MatRadioModule } from '@angular/material/radio';
     WristFractureComponent,
     OdontogramComponent,
     OdontogramProcedureComponent,
-    HttpErrorComponent
+    HttpErrorComponent,
+    ExpressionSavedComponent,
+    ExpressionFormsComponent,
+    ClinicalFormsTabsComponent,
+    SnackAlertComponent
   ],
   imports: [
     BrowserModule,

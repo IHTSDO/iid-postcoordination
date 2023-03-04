@@ -2,19 +2,19 @@ import { Component, Inject } from "@angular/core";
 import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from "@angular/material/snack-bar";
 
 @Component({
-    selector: 'snack-http-error',
-    templateUrl: './http-error.html',
+    selector: 'snack-alert',
+    templateUrl: './snack-alert.html',
     styles: [
       `
       .example-alert {
-        color: hotpink;
+        color: white;
       }
     `,
     ],
   })
-  export class HttpErrorComponent {
+  export class SnackAlertComponent {
     constructor(
-        public sbRef: MatSnackBarRef<HttpErrorComponent>,
+        public sbRef: MatSnackBarRef<SnackAlertComponent>,
         @Inject(MAT_SNACK_BAR_DATA) public data: any
       ) {}
   }

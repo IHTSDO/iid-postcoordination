@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ExpressionSavedComponent } from '../alerts/expression-saved';
+import { SnackAlertComponent } from '../alerts/snack-alert';
 import { ScgHighlightingPipe } from '../pipes/scg-highlighting.pipe';
 import { RefineTargetComponent } from '../refine-target/refine-target.component';
 import { TerminologyService } from '../services/terminology.service';
@@ -348,6 +350,11 @@ export class PcMainComponent implements OnInit {
       this.terminologyService.addPostcoordinatedExpression(this.closeToUserForm).subscribe(
         (data: any) => {
           if (data?.concept?.length > 0) {
+            this._snackBar.openFromComponent(SnackAlertComponent, {
+              duration: 5 * 1000,
+              data: "Success: Expression saved in Expressions Repository",
+              panelClass: ['green-snackbar']
+            });
             data?.concept[0].property?.forEach((property: any) => {
               if (property.code === 'humanReadableClassifiableForm') {
                 this.classifiableForm = property.valueString;

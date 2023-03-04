@@ -1,0 +1,17 @@
+#copy-icon {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.code {
+    min-height: 150px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    line-height: 1.5;
+    padding: 10px;
+    background-color: white;
+    margin-right: 20px;
+}

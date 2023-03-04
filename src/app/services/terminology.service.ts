@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorComponent } from '../alerts/http-error';
+import { SnackAlertComponent } from '../alerts/snack-alert';
 
 @Injectable({
   providedIn: 'root'
@@ -72,9 +73,10 @@ export class TerminologyService {
     return (error: any): Observable<T> => {
       console.error("There was an error!");
       console.log(error);
-      this._snackBar.openFromComponent(HttpErrorComponent, {
+      this._snackBar.openFromComponent(SnackAlertComponent, {
         duration: 5 * 1000,
         data: error.message,
+        panelClass: ['red-snackbar']
       });
       // TODO: send the error to remote logging infrastructure
       // console.error(error); // log to console instead

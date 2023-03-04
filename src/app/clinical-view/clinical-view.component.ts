@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ExpressionSavedComponent } from '../alerts/expression-saved';
+import { SnackAlertComponent } from '../alerts/snack-alert';
 import { ScgHighlightingPipe } from '../pipes/scg-highlighting.pipe';
 import { TerminologyService } from '../services/terminology.service';
 
@@ -43,8 +46,9 @@ export class ClinicalViewComponent implements OnInit {
 
   loadingPatch = false;
   classifiableForm = "";
+  necessaryNormalForm = "";
 
-  constructor(private sanitizer: DomSanitizer, private terminologyService: TerminologyService) { }
+  constructor(private sanitizer: DomSanitizer, private terminologyService: TerminologyService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -105,6 +109,11 @@ export class ClinicalViewComponent implements OnInit {
       this.classifiableForm = "";
       this.terminologyService.addPostcoordinatedExpression(this.closeToUserForm).subscribe((data: any) => {
         if (data?.concept?.length > 0) {
+          this._snackBar.openFromComponent(SnackAlertComponent, {
+            duration: 5 * 1000,
+            data: "Success: Expression saved in Expressions Repository",
+            panelClass: ['green-snackbar']
+          });
           data?.concept[0].property?.forEach((property: any) => {
             if (property.code === 'humanReadableClassifiableForm') {
               this.classifiableForm = property.valueString;

@@ -14,9 +14,9 @@
             </mat-tab>
           </mat-tab-group>
           <button mat-flat-button color="primary" (click)="save()" class="action" 
-          [disabled]="false"
-          *ngIf="!loadingPatch">
-              Save
+              [disabled]="false"
+              *ngIf="!loadingPatch">
+                  Save
           </button>
           <mat-spinner [diameter]="30" color="accent" *ngIf="loadingPatch"></mat-spinner>
         </div>
