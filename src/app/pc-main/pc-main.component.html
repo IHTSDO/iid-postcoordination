@@ -2,6 +2,10 @@
     <mat-card-title>Postcoordination data entry</mat-card-title>
     <mat-card-content>
         <div class="focus-concept">
+            <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedBinding">
+                <mat-radio-button value="1" (click)="setBinding()">Clinical findings&nbsp;&nbsp;</mat-radio-button>
+                <mat-radio-button value="2" (click)="setBinding()">Procedures&nbsp;&nbsp;</mat-radio-button>
+            </mat-radio-group>
             <app-autocomplete-binding [binding]="binding" (selectionChange)="setSelectedConcept($event)" class="autocomplete"></app-autocomplete-binding>
             <div class="buttons">
                 <button mat-flat-button color="primary" [matMenuTriggerFor]="addMenu" [disabled]="!(addOptions.length > 0)">Qualify</button>
@@ -39,10 +43,6 @@
                         {{ mrcmOption.fsn.term }}
                     </button>
                 </mat-menu>
-                <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedBinding">
-                    <mat-radio-button value="1" (click)="setBinding()">Clinical findings&nbsp;&nbsp;</mat-radio-button>
-                    <mat-radio-button value="2" (click)="setBinding()">Procedures&nbsp;&nbsp;</mat-radio-button>
-                  </mat-radio-group>
             </div>
         </div>
         <!-- Two cards, side by side, that will contain preformatted code -->

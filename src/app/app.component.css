@@ -22,3 +22,8 @@ a {
 button {
     overflow-x: hidden !important;
 }
+
+.mat-toolbar {
+    background-color: black;
+    color: white; /* add this line to change the text color to white */
+  }
