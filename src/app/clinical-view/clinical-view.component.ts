@@ -117,6 +117,8 @@ export class ClinicalViewComponent implements OnInit {
           data?.concept[0].property?.forEach((property: any) => {
             if (property.code === 'humanReadableClassifiableForm') {
               this.classifiableForm = property.valueString;
+            } else if (property.code === 'humanReadableNecessaryNormalForm') {
+              this.necessaryNormalForm = property.valueString;
             }
           });
         }
