@@ -59,7 +59,7 @@
                     <button mat-flat-button color="primary" (click)="save()" class="action" 
                     [disabled]="!(selectedConcept && (selectedLaterality || selectedQualifications.length > 0 || selectedSeverity || selectedContextAttributes.length > 0))"
                     *ngIf="!loadingPatch">
-                        Save
+                        Transform
                     </button>
                     <mat-spinner [diameter]="30" color="accent" *ngIf="loadingPatch"></mat-spinner>
                 </mat-card-actions>
