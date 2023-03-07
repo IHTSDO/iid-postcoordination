@@ -54,7 +54,10 @@ export class ClinicalViewComponent implements OnInit {
   }
 
   getSafeHtml(input: string) {
-    const transformed = new ScgHighlightingPipe().transform(input);
+    let transformed = new ScgHighlightingPipe().transform(input);
+    transformed = transformed.replace(/,/g, ',\n\t');
+    transformed = transformed.replace(/}/g, '}\n');
+    transformed = transformed.replace(/:/g, ':\n\t');    
     return this.sanitizer.bypassSecurityTrustHtml(transformed);
   }
 
