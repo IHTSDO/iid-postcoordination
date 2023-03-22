@@ -150,6 +150,9 @@ export class PcMainComponent implements OnInit {
     this.classifiableForm = "";
     this.necessaryNormalForm = "";
     this.ecl = "";
+    this.addOptions = [];
+    this.refineOptions = [];
+    this.mrcmAttributes = {};
   }
 
   setSelectedConcept(concept: any) {
