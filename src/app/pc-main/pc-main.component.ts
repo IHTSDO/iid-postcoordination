@@ -60,7 +60,7 @@ export class PcMainComponent implements OnInit {
   laterality: any = {
     title: 'Laterality',
     attribute: '272741003 |Laterality|',
-    range: `<< 182353008 |Side (qualifier value)|`,
+    range: `< 182353008 |Side (qualifier value)|`,
     enabled: true,
     preloadedRange: []
   }
@@ -69,7 +69,7 @@ export class PcMainComponent implements OnInit {
     {
       title: 'Finding context',
       attribute: '408729009 |Finding context|',
-      range: `<< 410514004 |Finding context value|`,
+      range: `< 410514004 |Finding context value|`,
       enabled: true,
       hideInBinding: "2",
       preloadedRange: []
@@ -77,7 +77,7 @@ export class PcMainComponent implements OnInit {
     {
       title: 'Procedure context',
       attribute: '408730004 |Procedure context|',
-      range: `<< 288532009 |Context values for actions (qualifier value)|`,
+      range: `< 288532009 |Context values for actions (qualifier value)|`,
       enabled: true,
       hideInBinding: "1",
       preloadedRange: []
@@ -85,14 +85,14 @@ export class PcMainComponent implements OnInit {
     {
       title: 'Temporal context',
       attribute: '408731000 |Temporal context|',
-      range: `<< 410510008 |Temporal context value| `,
+      range: `< 410510008 |Temporal context value| `,
       enabled: true,
       preloadedRange: []
     },
     {
       title: 'Subject relationship context',
       attribute: '408732007 |Subject relationship context|',
-      range: `<< 125676002 |Person|`,
+      range: `< 125676002 |Person|`,
       enabled: true,
       preloadedRange: []
     }
@@ -136,18 +136,25 @@ export class PcMainComponent implements OnInit {
       } else {
         this.binding = this.proceduresBinding;
       }
+      this.clearSelected();
     }, 500);
   }
 
-  setSelectedConcept(concept: any) {
+  clearSelected() {
+    this.selectedConcept = null;
+    this.selectedSeverity = null;
+    this.selectedLaterality = null;
+    this.selectedQualifications = [];
+    this.selectedContextAttributes = [];
     this.closeToUserForm = "";
     this.classifiableForm = "";
-    this.addOptions = [];
-    this.refineOptions = [];
+    this.necessaryNormalForm = "";
+    this.ecl = "";
+  }
+
+  setSelectedConcept(concept: any) {
+    this.clearSelected();
     this.selectedConcept = concept;
-    this.selectedLaterality = null;
-    this.selectedSeverity = null;
-    this.selectedQualifications = [];
     this.generatePostcoordinationOptions(concept);
     this.generateCloseToUserForm();
   }
