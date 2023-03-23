@@ -9,6 +9,7 @@ import { TerminologyService } from '../services/terminology.service';
 export class OdontogramProcedureComponent implements OnInit {
 
   @Output() closeToUserForm = new EventEmitter<string>();
+  @Output() save = new EventEmitter<string>();
 
   teeth: any[] = [];
   filteredTeeth: any[] = [];
@@ -147,6 +148,10 @@ export class OdontogramProcedureComponent implements OnInit {
     this.filteredProcedures = this.procedures.filter((finding) => {
       return finding.display.toLowerCase().includes(filter.toLowerCase());
     });
+  }
+
+  saveExpression() {
+    this.save.emit(Date.now().toString());
   }
 
 }

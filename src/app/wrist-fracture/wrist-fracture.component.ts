@@ -8,6 +8,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class WristFractureComponent implements OnInit {
 
   @Output() closeToUserForm = new EventEmitter<string>();
+  @Output() save = new EventEmitter<string>();
 
   bones: any[] = [
     { code: "75129005", display: "Bone structure of distal radius", attribute: "363698007 |Finding site|" },
@@ -88,6 +89,10 @@ export class WristFractureComponent implements OnInit {
     this.selectedFractureMorph = undefined;
     this.selectedFractureMorph2 = undefined;
     this.generateCloseToUserForm();
+  }
+
+  saveExpression() {
+    this.save.emit(Date.now().toString());
   }
 
 }

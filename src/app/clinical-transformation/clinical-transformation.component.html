@@ -3,13 +3,41 @@
     <mat-card-content>
         <button mat-icon-button color="primary" id="info-button" matTooltip="{{closeToUserFormForDisplay}}">
             <mat-icon>info</mat-icon>
-          </button> 
+        </button> 
         <app-autocomplete-binding [binding]="binding" (selectionChange)="setSelectedConcept($event)" class="autocomplete"></app-autocomplete-binding>
-        <mat-chip-list aria-label="Fish selection">
-            <mat-chip>One fish</mat-chip>
-            <mat-chip>Two fish</mat-chip>
-            <mat-chip color="primary" selected>Primary fish</mat-chip>
-            <mat-chip color="accent" selected>Accent fish</mat-chip>
-          </mat-chip-list>
+        <div class="h-container" *ngIf="selectedConcept">
+          <div>
+            <span class="chip-selected" *ngIf="selectedSeverity == mild" (click)="selectedSeverity = null; generateCloseToUserForm();">
+              Mild
+            </span>
+            <span class="chip" *ngIf="selectedSeverity != mild" (click)="selectedSeverity = mild; generateCloseToUserForm();">Mild</span>
+            <span class="chip-selected" *ngIf="selectedSeverity == moderate" (click)="selectedSeverity = null; generateCloseToUserForm();">
+              Moderate
+            </span>
+            <span class="chip" *ngIf="selectedSeverity != moderate" (click)="selectedSeverity = moderate; generateCloseToUserForm();">Moderate</span>
+            <span class="chip-selected" *ngIf="selectedSeverity == severe" (click)="selectedSeverity = null; generateCloseToUserForm();">
+              Severe
+            </span>
+            <span class="chip" *ngIf="selectedSeverity != severe" (click)="selectedSeverity = severe; generateCloseToUserForm();">Severe</span>
+          </div>
+          <div *ngIf="lateralizable">
+            <span class="chip-selected" *ngIf="selectedLaterality == right" (click)="selectedLaterality = null; generateCloseToUserForm();">
+              Right
+            </span>
+            <span class="chip" *ngIf="selectedLaterality != right" (click)="selectedLaterality = right; generateCloseToUserForm();">Right</span>
+            <span class="chip-selected" *ngIf="selectedLaterality == left" (click)="selectedLaterality = null; generateCloseToUserForm();">
+              Left
+            </span>
+            <span class="chip" *ngIf="selectedLaterality != left" (click)="selectedLaterality = left; generateCloseToUserForm();">Left</span>
+            <span class="chip-selected" *ngIf="selectedLaterality == bilateral" (click)="selectedLaterality = null; generateCloseToUserForm();">
+              Bilateral
+            </span>
+            <span class="chip" *ngIf="selectedLaterality != bilateral" (click)="selectedLaterality = bilateral; generateCloseToUserForm();">Bilateral</span>
+          </div>
+          <mat-spinner [diameter]="30" color="accent" *ngIf="loading"></mat-spinner>
+        </div>
     </mat-card-content>
+    <mat-card-actions class="actions">
+        <button mat-flat-button color="primary" (click)="saveExpression()" class="action" *ngIf="selectedConcept && !loading">Save</button>
+    </mat-card-actions>
 </mat-card>

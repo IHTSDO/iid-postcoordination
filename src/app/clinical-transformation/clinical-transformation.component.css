@@ -9,3 +9,46 @@
     right: 30px;
     overflow: hidden;
 }
+
+.h-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.chip {
+    display: inline-block;
+    padding: 7px 12px;
+    margin: 4px;
+    border-radius: 16px;
+    background-color: #e2e1e1;
+    color: #333;
+    font-weight: bold;
+    user-select: none;
+    cursor: pointer;
+}
+.chip-selected {
+    display: inline-block;
+    padding: 7px 12px;
+    margin: 4px;
+    border-radius: 16px;
+    background-color: #5743d8;
+    color: white;
+    font-weight: bold;
+    user-select: none;
+    cursor: pointer;
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 10px;
+}
+
+.action {
+    margin: 5px;
+}
