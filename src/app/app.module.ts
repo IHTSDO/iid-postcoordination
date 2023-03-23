@@ -43,6 +43,7 @@ import { ExpressionSavedComponent } from './alerts/expression-saved';
 import { ExpressionFormsComponent } from './expression-forms/expression-forms.component';
 import { ClinicalFormsTabsComponent } from './clinical-forms-tabs/clinical-forms-tabs.component';
 import { SnackAlertComponent } from './alerts/snack-alert';
+import { ClinicalTransformationComponent } from './clinical-transformation/clinical-transformation.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { SnackAlertComponent } from './alerts/snack-alert';
     ExpressionSavedComponent,
     ExpressionFormsComponent,
     ClinicalFormsTabsComponent,
-    SnackAlertComponent
+    SnackAlertComponent,
+    ClinicalTransformationComponent
   ],
   imports: [
     BrowserModule,

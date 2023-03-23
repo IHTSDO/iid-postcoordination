@@ -1,0 +1,11 @@
+.clinical {
+    background-color: lightblue;
+    min-height: 290px;
+}
+
+#info-button {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    overflow: hidden;
+}

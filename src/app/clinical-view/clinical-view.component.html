@@ -3,6 +3,9 @@
     <mat-card-content>
         <div class="h-container">
           <mat-tab-group class="h-card clinical" [selectedIndex]="0">
+            <mat-tab label="Diagnosis">
+              <app-clinical-transformation (closeToUserForm)="updateCuf($event)"></app-clinical-transformation>
+            </mat-tab>
             <mat-tab label="Wrist fracture">
               <app-wrist-fracture (closeToUserForm)="updateCuf($event)"></app-wrist-fracture>
             </mat-tab>

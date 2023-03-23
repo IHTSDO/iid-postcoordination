@@ -1,0 +1,15 @@
+<mat-card class="clinical">
+    <mat-card-title>Diagnosis:</mat-card-title>
+    <mat-card-content>
+        <button mat-icon-button color="primary" id="info-button" matTooltip="{{closeToUserFormForDisplay}}">
+            <mat-icon>info</mat-icon>
+          </button> 
+        <app-autocomplete-binding [binding]="binding" (selectionChange)="setSelectedConcept($event)" class="autocomplete"></app-autocomplete-binding>
+        <mat-chip-list aria-label="Fish selection">
+            <mat-chip>One fish</mat-chip>
+            <mat-chip>Two fish</mat-chip>
+            <mat-chip color="primary" selected>Primary fish</mat-chip>
+            <mat-chip color="accent" selected>Accent fish</mat-chip>
+          </mat-chip-list>
+    </mat-card-content>
+</mat-card>
