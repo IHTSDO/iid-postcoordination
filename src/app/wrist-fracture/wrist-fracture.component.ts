@@ -10,24 +10,24 @@ export class WristFractureComponent implements OnInit {
   @Output() closeToUserForm = new EventEmitter<string>();
 
   bones: any[] = [
-    { code: "75129005", display: "Bone structure of distal radius (body structure)", attribute: "363698007 |Finding site (attribute)|" },
-    { code: "21754008", display: "Structure of styloid process of radius (body structure)", attribute: "363698007 |Finding site (attribute)|" },
-    { code: "91361004", display: "Structure of styloid process of ulna (body structure)", attribute: "363698007 |Finding site (attribute)|" },
-    { code: "30518006", display: "Bone structure of scaphoid (body structure)", attribute: "363698007 |Finding site (attribute)|" },
+    { code: "75129005", display: "Bone structure of distal radius", attribute: "363698007 |Finding site|" },
+    { code: "21754008", display: "Structure of styloid process of radius", attribute: "363698007 |Finding site|" },
+    { code: "91361004", display: "Structure of styloid process of ulna", attribute: "363698007 |Finding site|" },
+    { code: "30518006", display: "Bone structure of scaphoid", attribute: "363698007 |Finding site|" },
   ]
 
   displacementMorphs: any[] = [
-    { code: "42164003", display: "Posterior displacement (morphologic abnormality)", attribute: "116676008 |Associated morphology (attribute)|" },
-    { code: "76093008", display: "Anterior displacement (morphologic abnormality)", attribute: "116676008 |Associated morphology (attribute)|" },
-    { code: "87642003", display: "Dislocation (morphologic abnormality)", attribute: "116676008 |Associated morphology (attribute)|" },
+    { code: "42164003", display: "Posterior displacement", attribute: "116676008 |Associated morphology|" },
+    { code: "76093008", display: "Anterior displacement)", attribute: "116676008 |Associated morphology|" },
+    { code: "87642003", display: "Dislocation", attribute: "116676008 |Associated morphology|" },
   ]
 
   fractureMorphs: any[] = [
-    { code: "52329006", display: "Fracture, open (morphologic abnormality)", attribute: "116676008 |Associated morphology (attribute)|" },
-    { code: "20946005", display: "Fracture, closed (morphologic abnormality)", attribute: "116676008 |Associated morphology (attribute)|" },
-    { code: "134317008", display: "Linear fracture (morphologic abnormality)", attribute: "116676008 |Associated morphology (attribute)|" },
-    { code: "13321001", display: "Fracture, comminuted (morphologic abnormality)", attribute: "116676008 |Associated morphology (attribute)|" },
-    { code: "442085002", display: "Greenstick fracture (morphologic abnormality)", attribute: "116676008 |Associated morphology (attribute)|" },
+    { code: "52329006", display: "Fracture, open", attribute: "116676008 |Associated morphology|" },
+    { code: "20946005", display: "Fracture, closed", attribute: "116676008 |Associated morphology|" },
+    { code: "134317008", display: "Linear fracture", attribute: "116676008 |Associated morphology|" },
+    { code: "13321001", display: "Fracture, comminuted", attribute: "116676008 |Associated morphology|" },
+    { code: "442085002", display: "Greenstick fracture", attribute: "116676008 |Associated morphology|" },
   ]
 
   closeToUserFormRoot = "125605004 |Fracture of bone (disorder)|";
@@ -50,10 +50,10 @@ export class WristFractureComponent implements OnInit {
     // if selectedDisplacementMorph add a new rolegroup with the finding site and the displacement morphology
 
     let form = this.closeToUserFormRoot + ":\n";
-    let morph = "125605004 |Fracture of bone (disorder)|";
-    let bone = "272673000 |Bone structure (body structure)|";
-    let findingSite = "363698007 |Finding site (attribute)|";
-    let associatedMorphology = "116676008 |Associated morphology (attribute)|";
+    let morph = "125605004 |Fracture of bone|";
+    let bone = "272673000 |Bone structure|";
+    let findingSite = "363698007 |Finding site|";
+    let associatedMorphology = "116676008 |Associated morphology|";
     if (this.selectedBone) {
       bone = this.selectedBone.code + " |" + this.selectedBone.display + "|";
     }
