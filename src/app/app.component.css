@@ -6,9 +6,6 @@ button {
     margin-left: 15px;
 }
 
-a {
-    margin-left: 15px;
-}
 
 #title {
     margin-left: 15px;
@@ -27,3 +24,22 @@ button {
     background-color: black;
     color: white; /* add this line to change the text color to white */
   }
+
+.container {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.left-column, .right-column {
+    padding: 20px;
+}
+
+.left-column {
+    width: 50%;
+}
+
+.right-column {
+    width: 50%;
+}

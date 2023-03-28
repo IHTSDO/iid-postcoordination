@@ -37,4 +37,28 @@
   <mat-tab label="Transformations">
     <app-pc-main></app-pc-main>
   </mat-tab>
+  <mat-tab label="About this demo">
+    <div class="container">
+        <mat-card class="left-column">
+          <mat-card-header>
+            <mat-card-title>About the Postcoordination demonstrator</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <br><br>
+            <p>This demonstration complements <a href="https://confluence.ihtsdotools.org/display/DOCEXPPG/Practical+Guide+to+Postcoordination" target="_blank">SNOMED International's Practical Guide to Postcoordination</a> (Currently under development)</p>
+            <p>This front end application demonstrates possible implementations of clinical user interfaces that support postcoordination and offers a technical view to the process of the generation of postcoordinated expressions in Close to USer Form, 
+              how these expressions are submitted to an expression repository, how the Classifiable Form is created following any supported transformation patterns, and how the Necessary Normal Form is generated after running a description logic classifier.
+            </p>
+            <p>The expressions generated and stored in the expression repository are available for queries using ECL.</p>
+            <p>The expression processing and storage is performed by a development version of Snowstorm <a href="https://github.com/IHTSDO/snowstorm-x" target="_blank">(Snowstorm-X)</a> 
+              that implements the necessary FHIR APIs as described in the postcoordination guide.</p>
+          </mat-card-content>
+        </mat-card>
+        <mat-card class="right-column">
+          <mat-card-content>
+            <img id="snowstorm-logo" src="assets/img/SNOWSTORM-logo.svg">
+          </mat-card-content>
+        </mat-card>
+    </div>
+  </mat-tab>
 </mat-tab-group>

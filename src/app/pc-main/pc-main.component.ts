@@ -15,6 +15,8 @@ import { TerminologyService } from '../services/terminology.service';
 })
 export class PcMainComponent implements OnInit {
 
+  timestamp: any = Date.now();
+
   findingsBinding: any = {
     title: 'Clinical finding',
     type: 'dropdown',
@@ -137,6 +139,7 @@ export class PcMainComponent implements OnInit {
         this.binding = this.proceduresBinding;
       }
       this.clearSelected();
+      this.timestamp = Date.now();
     }, 500);
   }
 

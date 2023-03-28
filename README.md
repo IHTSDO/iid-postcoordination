@@ -5,7 +5,7 @@ operations.
 
 ## Background
 
-This demonstration complements [SNOMED International's Practical Guide to Postcoordination](https://confluence.ihtsdotools.org/pages/viewpage.action?pageId=61149640) (Currently under development)
+This demonstration complements [SNOMED International's Practical Guide to Postcoordination](https://confluence.ihtsdotools.org/display/DOCEXPPG/Practical+Guide+to+Postcoordination) (Currently under development)
 
 ## Features
 

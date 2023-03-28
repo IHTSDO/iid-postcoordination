@@ -6,7 +6,7 @@
                 <mat-radio-button value="1" (click)="setBinding()">Clinical findings&nbsp;&nbsp;</mat-radio-button>
                 <mat-radio-button value="2" (click)="setBinding()">Procedures&nbsp;&nbsp;</mat-radio-button>
             </mat-radio-group>
-            <app-autocomplete-binding [binding]="binding" (selectionChange)="setSelectedConcept($event)" class="autocomplete"></app-autocomplete-binding>
+            <app-autocomplete-binding [binding]="binding" (selectionChange)="setSelectedConcept($event)" [clear]="timestamp" class="autocomplete"></app-autocomplete-binding>
             <div class="buttons">
                 <button mat-flat-button color="primary" [matMenuTriggerFor]="addMenu" [disabled]="!(addOptions.length > 0)">Qualify</button>
                 <button mat-flat-button color="primary" [matMenuTriggerFor]="refineMenu" [disabled]="!(refineOptions.length > 0)">Refine</button>

@@ -15,6 +15,7 @@ export class AutocompleteBindingComponent implements OnInit {
   formControl = new FormControl();
   autoFilter: Observable<any> | undefined;
   @Input() binding: any;
+  @Input() clear: any;
   @Output() selectionChange = new EventEmitter<any>();
   loading = false;
   selectedConcept: any = {};
@@ -38,6 +39,14 @@ export class AutocompleteBindingComponent implements OnInit {
         this.loading = false;
       })
     );  
+  }
+
+  // On clear, reset the selected concept
+  ngOnChanges() {
+    if (this.clear) {
+      console.log(this.clear)
+      this.formControl.setValue('');
+    }
   }
 
   optionSelected(value: any) {
