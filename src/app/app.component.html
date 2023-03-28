@@ -43,20 +43,21 @@
           <mat-card-header>
             <mat-card-title>About the Postcoordination demonstrator</mat-card-title>
           </mat-card-header>
-          <mat-card-content>
-            <br><br>
-            <p>This demonstration complements <a href="https://confluence.ihtsdotools.org/display/DOCEXPPG/Practical+Guide+to+Postcoordination" target="_blank">SNOMED International's Practical Guide to Postcoordination</a> (Currently under development)</p>
-            <p>This front end application demonstrates possible implementations of clinical user interfaces that support postcoordination and offers a technical view to the process of the generation of postcoordinated expressions in Close to USer Form, 
-              how these expressions are submitted to an expression repository, how the Classifiable Form is created following any supported transformation patterns, and how the Necessary Normal Form is generated after running a description logic classifier.
-            </p>
-            <p>The expressions generated and stored in the expression repository are available for queries using ECL.</p>
-            <p>The expression processing and storage is performed by a development version of Snowstorm <a href="https://github.com/IHTSDO/snowstorm-x" target="_blank">(Snowstorm-X)</a> 
-              that implements the necessary FHIR APIs as described in the postcoordination guide.</p>
-          </mat-card-content>
-        </mat-card>
-        <mat-card class="right-column">
-          <mat-card-content>
-            <img id="snowstorm-logo" src="assets/img/SNOWSTORM-logo.svg">
+          <mat-card-content class="large-font">
+            <br>
+            <p>This demo complements <a href="https://confluence.ihtsdotools.org/display/DOCEXPPG/Practical+Guide+to+Postcoordination" target="_blank">
+              SNOMED International's Practical Guide to Postcoordination</a>, 
+              which is currently being developed. The front-end application showcases potential clinical 
+              user interfaces that support postcoordination. It also provides a technical overview of the 
+              postcoordinated expression generation process starting from the Close to User Form (CUF).</p>
+            <p>The postcoordinated expressions are submitted to an expression repository and transformed into 
+              the Classifiable Form (CF), which is then used to generate the Necessary Normal Form (NNF) by running a 
+              description logic classifier. The expressions stored in the repository can be queried using ECL. 
+              The processing and storage of expressions are handled by 
+              <a href="https://github.com/IHTSDO/snowstorm-x" target="_blank">Snowstorm-X</a>, a development version of 
+              Snowstorm that incorporates the FHIR APIs described in the postcoordination guide.</p>
+            <p>This is a reference implementation and other terminology servers are expected to implement compatible APIs to support postcoordination.</p>
+              <a href="https://github.com/IHTSDO/snowstorm-x" target="_blank"><img id="snowstorm-logo" src="assets/img/SNOWSTORM-logo.svg"></a>
           </mat-card-content>
         </mat-card>
     </div>

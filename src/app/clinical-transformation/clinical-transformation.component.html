@@ -4,7 +4,7 @@
         <button mat-icon-button color="primary" id="info-button" matTooltip="{{closeToUserFormForDisplay}}">
             <mat-icon>info</mat-icon>
         </button> 
-        <app-autocomplete-binding [binding]="binding" (selectionChange)="setSelectedConcept($event)" class="autocomplete"></app-autocomplete-binding>
+        <app-autocomplete-binding [binding]="binding" (selectionChange)="setSelectedConcept($event)" [clear]="timestamp" class="autocomplete"></app-autocomplete-binding>
         <div class="h-container" *ngIf="selectedConcept">
           <div>
             <span class="chip-selected" *ngIf="selectedSeverity == mild" (click)="selectedSeverity = null; generateCloseToUserForm();">
@@ -39,5 +39,6 @@
     </mat-card-content>
     <mat-card-actions class="actions">
         <button mat-flat-button color="primary" (click)="saveExpression()" class="action" *ngIf="selectedConcept && !loading">Save</button>
+        <button mat-flat-button color="primary" (click)="clear()" class="action" *ngIf="selectedConcept && !loading">Clear</button>
     </mat-card-actions>
 </mat-card>

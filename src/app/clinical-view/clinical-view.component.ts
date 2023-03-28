@@ -42,7 +42,7 @@ export class ClinicalViewComponent implements OnInit {
   selectedDisplacementMorph: any;
   selectedFractureMorph: any;
   selectedFractureMorph2: any;
-  ecl: string = "<< " + this.closeToUserForm;
+  ecl: string = "";
 
   loadingPatch = false;
   classifiableForm = "";
@@ -55,9 +55,10 @@ export class ClinicalViewComponent implements OnInit {
 
   getSafeHtml(input: string) {
     let transformed = new ScgHighlightingPipe().transform(input);
-    transformed = transformed.replace(/,/g, ',\n\t');
+    transformed = transformed.replace(/,/g, ',\n');
     transformed = transformed.replace(/}/g, '}\n');
-    transformed = transformed.replace(/:/g, ':\n\t');    
+    transformed = transformed.replace(/:/g, ':\n');
+    transformed = transformed.replace(/{/g, '\t{');    
     return this.sanitizer.bypassSecurityTrustHtml(transformed);
   }
 
@@ -66,6 +67,7 @@ export class ClinicalViewComponent implements OnInit {
     this.selectedDisplacementMorph = undefined;
     this.selectedFractureMorph = undefined;
     this.selectedFractureMorph2 = undefined;
+    this.ecl = "";
     this.generateCloseToUserForm();
   }
 

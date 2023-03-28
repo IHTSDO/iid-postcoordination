@@ -43,3 +43,11 @@ button {
 .right-column {
     width: 50%;
 }
+
+.large-font {
+    font-size: 18px;
+}
+
+#snowstorm-logo {
+    width: 300px;
+}

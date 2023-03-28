@@ -44,7 +44,6 @@ export class AutocompleteBindingComponent implements OnInit {
   // On clear, reset the selected concept
   ngOnChanges() {
     if (this.clear) {
-      console.log(this.clear)
       this.formControl.setValue('');
     }
   }

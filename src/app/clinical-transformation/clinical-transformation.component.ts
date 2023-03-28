@@ -78,10 +78,16 @@ export class ClinicalTransformationComponent implements OnInit {
   lateralizable = false;
   allowsSeverity = false;
   loading = false;
+  timestamp = Date.now();
 
   constructor(private terminologyService: TerminologyService) { }
 
   ngOnInit(): void {
+  }
+
+  clear() {
+    this.clearSelected();
+    this.timestamp = Date.now();
   }
 
   clearSelected() {

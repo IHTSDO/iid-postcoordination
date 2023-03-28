@@ -18,10 +18,10 @@
           </mat-tab-group>
           <!-- <div class="code-container h-card"> -->
             <mat-card class="h-code-card">
-              <mat-card-title>Close to user form</mat-card-title>
+              <mat-card-title>Necessary Normal Form (NNF)</mat-card-title>
               <mat-card-content>
-                <p class="code" [innerHTML]="getSafeHtml(classifiableForm)"></p>
-                <button mat-icon-button [cdkCopyToClipboard]="classifiableForm" *ngIf="classifiableForm" id="copy-icon" matTooltip="Copy to clipboard" class="muted">
+                <p class="code" [innerHTML]="getSafeHtml(necessaryNormalForm)"></p>
+                <button mat-icon-button [cdkCopyToClipboard]="necessaryNormalForm" *ngIf="necessaryNormalForm" id="copy-icon" matTooltip="Copy to clipboard" class="muted">
                     <mat-icon>content_copy</mat-icon>
                 </button>
               </mat-card-content>

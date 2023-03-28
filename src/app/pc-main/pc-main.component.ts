@@ -55,7 +55,7 @@ export class PcMainComponent implements OnInit {
     title: 'Severity',
     attribute: '246112005 |Severity|',
     range: `<< 272141005 |Severities (qualifier value)|`,
-    enabled: true,
+    enabled: false,
     preloadedRange: []
   }
 
@@ -63,7 +63,7 @@ export class PcMainComponent implements OnInit {
     title: 'Laterality',
     attribute: '272741003 |Laterality|',
     range: `< 182353008 |Side (qualifier value)|`,
-    enabled: true,
+    enabled: false,
     preloadedRange: []
   }
 
@@ -80,7 +80,7 @@ export class PcMainComponent implements OnInit {
       title: 'Procedure context',
       attribute: '408730004 |Procedure context|',
       range: `< 288532009 |Context values for actions (qualifier value)|`,
-      enabled: true,
+      enabled: false,
       hideInBinding: "1",
       preloadedRange: []
     },
@@ -88,14 +88,14 @@ export class PcMainComponent implements OnInit {
       title: 'Temporal context',
       attribute: '408731000 |Temporal context|',
       range: `< 410510008 |Temporal context value| `,
-      enabled: true,
+      enabled: false,
       preloadedRange: []
     },
     {
       title: 'Subject relationship context',
       attribute: '408732007 |Subject relationship context|',
       range: `< 125676002 |Person|`,
-      enabled: true,
+      enabled: false,
       preloadedRange: []
     }
   ];
