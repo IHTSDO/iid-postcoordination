@@ -73,6 +73,7 @@ export class WristFractureComponent implements OnInit {
       form = form + "\t{" + findingSite + " = " + bone + " ,\n";
       form = form + "\t" + this.selectedDisplacementMorph.attribute + " = " + this.selectedDisplacementMorph.code + " |" + this.selectedDisplacementMorph.display + "| }";
     }
+    form = form + "\n\t{ 42752001 |Due to (attribute)| = 773760007 |Traumatic event (event)| }";
     if (form.endsWith(":\n")) {
       // remove last 2 characters of the form
       form = form.substring(0, form.length - 2);

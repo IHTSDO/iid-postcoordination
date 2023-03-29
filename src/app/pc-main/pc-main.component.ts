@@ -104,6 +104,7 @@ export class PcMainComponent implements OnInit {
   mrcmAttributes: any = {};
   loadingMrcmAttributes = false;
   selfGroupedIds: any = ['260870009', '363702006', '42752001', '255234002', '288556008', '371881003', '263502005', '726633004'];
+  equivalentConcept: any = {};
 
   constructor(private terminologyService: TerminologyService, public dialog: MatDialog, private sanitizer: DomSanitizer, private _snackBar: MatSnackBar) { }
 
@@ -156,6 +157,7 @@ export class PcMainComponent implements OnInit {
     this.addOptions = [];
     this.refineOptions = [];
     this.mrcmAttributes = {};
+    this.equivalentConcept = {};
   }
 
   setSelectedConcept(concept: any) {
@@ -376,6 +378,8 @@ export class PcMainComponent implements OnInit {
                 this.ecl = `<< ${focusConcept}`;
               } else if (property.code === 'humanReadableNecessaryNormalForm') {
                 this.necessaryNormalForm = property.valueString;
+              } else if (property.code === 'equivalentConcept') {
+                this.equivalentConcept = { code: property.valueString, display: '' };
               }
             });
           }

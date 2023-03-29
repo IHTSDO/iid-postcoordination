@@ -9,6 +9,7 @@ import { TerminologyService } from '../services/terminology.service';
 export class EclExpandComponent implements OnInit {
 
   @Input() ecl: string = '';
+  @Input() equivalentConcept: any = {};
 
   expansion: any[] | undefined;
   total: any = 0;
@@ -21,14 +22,24 @@ export class EclExpandComponent implements OnInit {
   preTotal: any = 0;
   preExpansionLength = 0;
 
-  equivalents: any[] | undefined;
-  equivalentsTotal: any = 0;
-  equivalentsLength = 0;
-
-
   constructor(public terminologyService: TerminologyService) { }
 
   ngOnInit(): void {
+  }
+
+  // On equivalentConcept change, lookup concept
+  ngOnChanges() {
+    if (this.equivalentConcept?.code) {
+      this.terminologyService.lookupConcept(this.equivalentConcept.code).subscribe(response => {
+        if (!response.issue) {
+          console.log(response)
+          // get the display name from the object response.parameter where name = "display"
+          this.equivalentConcept.display = response.parameter.find((p: any) => p.name === 'display')?.valueString;
+        } else {
+          console.log(response.issue.diagnostics)
+        }
+      });
+    }
   }
 
   loadPage() {

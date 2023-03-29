@@ -44,6 +44,8 @@ export class ClinicalViewComponent implements OnInit {
   selectedFractureMorph2: any;
   ecl: string = "";
 
+  equivalentConcept: any;
+
   loadingPatch = false;
   classifiableForm = "";
   necessaryNormalForm = "";
@@ -68,6 +70,7 @@ export class ClinicalViewComponent implements OnInit {
     this.selectedFractureMorph = undefined;
     this.selectedFractureMorph2 = undefined;
     this.ecl = "";
+    this.equivalentConcept = undefined;
     this.generateCloseToUserForm();
   }
 
@@ -124,6 +127,8 @@ export class ClinicalViewComponent implements OnInit {
               this.classifiableForm = property.valueString;
             } else if (property.code === 'humanReadableNecessaryNormalForm') {
               this.necessaryNormalForm = property.valueString;
+            } else if (property.code === 'equivalentConcept') {
+              this.equivalentConcept = { code: property.valueString, display: '' };
             }
           });
         }
