@@ -108,11 +108,11 @@ export class ClinicalViewComponent implements OnInit {
 
   updateCuf(form: string) {
     this.closeToUserForm = form;
-    this.ecl = "<< " + this.closeToUserForm;
   }
 
   save() {
     if (this.closeToUserForm) {
+      this.ecl = "<< " + this.closeToUserForm;;
       this.loadingPatch = true;
       this.classifiableForm = "";
       this.terminologyService.addPostcoordinatedExpression(this.closeToUserForm).subscribe((data: any) => {
