@@ -160,6 +160,11 @@ export class PcMainComponent implements OnInit {
     this.equivalentConcept = {};
   }
 
+  clearAll() {
+    this.clearSelected();
+    this.timestamp = Date.now();
+  }
+
   setSelectedConcept(concept: any) {
     this.clearSelected();
     this.selectedConcept = concept;
