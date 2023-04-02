@@ -2,12 +2,17 @@
     <mat-card-title>Postcoordination data entry</mat-card-title>
     <mat-card-content>
         <div class="focus-concept">
-            <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedBinding">
+            <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedBinding" class="radio-group">
                 <mat-radio-button value="1" (click)="setBinding()">Clinical findings&nbsp;&nbsp;</mat-radio-button>
                 <mat-radio-button value="2" (click)="setBinding()">Procedures&nbsp;&nbsp;</mat-radio-button>
+                <mat-radio-button value="3" (click)="setBinding()">Manual entry&nbsp;&nbsp;</mat-radio-button>
             </mat-radio-group>
-            <app-autocomplete-binding [binding]="binding" (selectionChange)="setSelectedConcept($event)" [clear]="timestamp" class="autocomplete"></app-autocomplete-binding>
-            <div class="buttons">
+            <app-autocomplete-binding [binding]="binding" 
+                (selectionChange)="setSelectedConcept($event)" 
+                [clear]="timestamp" class="autocomplete"
+                *ngIf="selectedBinding == '1' || selectedBinding == '2'">
+            </app-autocomplete-binding>
+            <div class="buttons" *ngIf="selectedBinding == '1' || selectedBinding == '2'">
                 <button mat-flat-button color="primary" [matMenuTriggerFor]="addMenu" [disabled]="!(addOptions.length > 0)">Qualify</button>
                 <button mat-flat-button color="primary" [matMenuTriggerFor]="refineMenu" [disabled]="!(refineOptions.length > 0)">Refine</button>
                 <button mat-flat-button color="primary" [matMenuTriggerFor]="mrcmMenu" [disabled]="!(mrcmAttributes?.items?.length > 0)">Self grouped attributes</button>
@@ -56,11 +61,16 @@
                     <button mat-icon-button [cdkCopyToClipboard]="closeToUserForm" *ngIf="closeToUserForm" id="copy-icon" matTooltip="Copy to clipboard" class="muted">
                         <mat-icon>content_copy</mat-icon>
                     </button>
-                    <p class="code" [innerHTML]="getSafeHtml(closeToUserForm)"></p>
+                    <p class="code" [innerHTML]="getSafeHtml(closeToUserForm)" *ngIf="selectedBinding != '3'"></p>
+                    <mat-form-field class="full-width" *ngIf="selectedBinding == '3'">
+                        <mat-label>Close to User Form Expression</mat-label>
+                        <textarea matInput placeholder="Enter expression..." rows="8" [(ngModel)]="closeToUserForm"></textarea>
+                      </mat-form-field>
                 </mat-card-content>
                 <mat-card-actions class="actions">
                     <button mat-flat-button color="primary" (click)="save()" class="action" 
-                    [disabled]="!(selectedConcept && (selectedLaterality || selectedQualifications.length > 0 || selectedSeverity || selectedContextAttributes.length > 0))"
+                    [disabled]="!(selectedConcept && (selectedLaterality || selectedQualifications.length > 0 
+                    || selectedSeverity || selectedContextAttributes.length > 0)) && (selectedBinding !='3' || !closeToUserForm)"
                     *ngIf="!loadingPatch">
                         Transform
                     </button>

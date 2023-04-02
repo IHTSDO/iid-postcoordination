@@ -18,6 +18,19 @@
     align-items: center;
 }
 
+.full-width {
+    margin-top: 1.5rem;
+    width: 100%;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    margin-right: 15px;
+    align-items: flex-start;
+}
+
 .autocomplete {
     width: 30%;
 }
