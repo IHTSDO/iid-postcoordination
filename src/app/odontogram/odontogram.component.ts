@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { TerminologyService } from '../services/terminology.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class OdontogramComponent implements OnInit {
   selectedTooth: any;
 
   toothSurfaces: any[] = [];
-  selectedToothSurface: any;
+  selectedToothSurfaces: any[] = [];
 
   toothFindings: any[] = [];
   filteredToothFindings: any[] = [];
@@ -50,7 +51,7 @@ export class OdontogramComponent implements OnInit {
 
   clean() {
     this.selectedTooth = undefined;
-    this.selectedToothSurface = undefined;
+    this.selectedToothSurfaces = [];
     this.selectedToothFinding = undefined;
   }
 
@@ -63,11 +64,18 @@ export class OdontogramComponent implements OnInit {
       form = form + "\t" + this.findingSite + " = " + this.selectedTooth.code + " |" + this.selectedTooth.display + "|";
     }
     
-    if (this.selectedToothSurface) {
+    console.log(this.selectedToothSurfaces)
+    if (this.selectedToothSurfaces.length > 0) {
       if (!form.endsWith(":\n")) {
         form = form + " ,\n";
       }
-      form = form + "\t" + this.findingSite + " = " + this.selectedToothSurface.code + " |" + this.selectedToothSurface.display + "|";
+      this.selectedToothSurfaces.forEach((surface, index) => {
+        form = form + "\t" + this.findingSite + " = " + surface.code + " |" + surface.display + "|";
+        if (index < this.selectedToothSurfaces.length - 1) {
+          form = form + " ,\n";
+        }
+      });
+      // form = form + "\t" + this.findingSite + " = " + this.selectedToothSurface.code + " |" + this.selectedToothSurface.display + "|";
     }
     if (form.endsWith(":\n")) {
       // remove last 2 characters of the form
@@ -77,6 +85,18 @@ export class OdontogramComponent implements OnInit {
     form = form.replace(/(\d)\|/g, '$1 |');
     this.closeToUserFormForDisplay = "Close to user form:   " + form;
     this.closeToUserForm.emit(form);
+  }
+
+  onCheckboxChange(event: MatCheckboxChange, item: string) {
+    if (event.checked) {
+      this.selectedToothSurfaces.push(item);
+    } else {
+      const index = this.selectedToothSurfaces.indexOf(item);
+      if (index >= 0) {
+        this.selectedToothSurfaces.splice(index, 1);
+      }
+    }
+    this.generateCloseToUserForm();
   }
 
   onKeyTooth(event: any) {

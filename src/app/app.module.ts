@@ -44,6 +44,7 @@ import { ExpressionFormsComponent } from './expression-forms/expression-forms.co
 import { ClinicalFormsTabsComponent } from './clinical-forms-tabs/clinical-forms-tabs.component';
 import { SnackAlertComponent } from './alerts/snack-alert';
 import { ClinicalTransformationComponent } from './clinical-transformation/clinical-transformation.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import { ClinicalTransformationComponent } from './clinical-transformation/clini
     MatCardModule,
     MatChipsModule,
     MatSnackBarModule,
-    MatRadioModule
+    MatRadioModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
