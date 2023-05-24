@@ -114,7 +114,7 @@ export class TerminologyService {
         'Content-Type':  'application/fhir+json'
       })
     };
-    return this.http.patch<any>(requestUrl, {resourceType: "CodeSystem", concept: [ { code: expression} ] }, httpOptions)
+    return this.http.patch<any>(requestUrl, [ { op: "add", path: "/concept", value: { code: expression } } ], httpOptions)
     .pipe(
       catchError(this.handleError<any>('addPostcoordinatedExpression', {}))
     );
