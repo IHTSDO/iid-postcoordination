@@ -5,13 +5,13 @@ operations.
 
 ## Background
 
-This demonstration complements [SNOMED International's Practical Guide to Postcoordination](https://confluence.ihtsdotools.org/display/DOCEXPPG/Practical+Guide+to+Postcoordination) (Currently under development)
+This demonstration complements [SNOMED International's Practical Guide to Postcoordination](http://snomed.org/postcoordination)
 
 ## Features
 
-The application provides a postcoordination playground for Level 1 and 2 transformations from Close to User Form to Classfiable Form, and examples of postcoordination use cases in clinical forms.
+The application provides a postcoordination playground for Transformation Levels 0 and 1, from Close to User Form to Classfiable Form, and examples of postcoordination use cases in clinical forms.
 
-The tools supports sending postcoordinated expressions to be stored in the test terminology server, and the retrieval of the expression as part of the ECL query results (Valueset expansions)
+The tools supports sending postcoordinated expressions to be stored in the test terminology server, and the retrieval of the expression as part of the ECL query results (Valueset expansions).
 
 ## Development server
 
