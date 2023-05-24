@@ -19,7 +19,7 @@ export class WristFractureComponent implements OnInit {
 
   displacementMorphs: any[] = [
     { code: "42164003", display: "Posterior displacement", attribute: "116676008 |Associated morphology|" },
-    { code: "76093008", display: "Anterior displacement)", attribute: "116676008 |Associated morphology|" },
+    { code: "76093008", display: "Anterior displacement", attribute: "116676008 |Associated morphology|" },
     { code: "87642003", display: "Dislocation", attribute: "116676008 |Associated morphology|" },
   ]
 
@@ -73,7 +73,7 @@ export class WristFractureComponent implements OnInit {
       form = form + "\t{" + findingSite + " = " + bone + " ,\n";
       form = form + "\t" + this.selectedDisplacementMorph.attribute + " = " + this.selectedDisplacementMorph.code + " |" + this.selectedDisplacementMorph.display + "| }";
     }
-    form = form + "\n\t{ 42752001 |Due to (attribute)| = 773760007 |Traumatic event (event)| }";
+    form = form + ",\n\t{ 42752001 |Due to (attribute)| = 773760007 |Traumatic event (event)| }";
     if (form.endsWith(":\n")) {
       // remove last 2 characters of the form
       form = form.substring(0, form.length - 2);

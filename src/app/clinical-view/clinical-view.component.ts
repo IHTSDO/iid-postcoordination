@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ExpressionSavedComponent } from '../alerts/expression-saved';
 import { SnackAlertComponent } from '../alerts/snack-alert';
 import { ScgHighlightingPipe } from '../pipes/scg-highlighting.pipe';
 import { TerminologyService } from '../services/terminology.service';
