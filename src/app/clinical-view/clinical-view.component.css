@@ -91,7 +91,7 @@
     color: #9e9e9e;
 }
 
-:host ::ng-deep .mat-tab-group {
+/* :host ::ng-deep .mat-tab-group {
     flex-direction: row;
 }
 :host ::ng-deep .mat-tab-header {
@@ -109,5 +109,5 @@ left: 98% !important;
 }
 :host ::ng-deep .mat-tab-body-wrapper {
 flex: 1 1 auto;
-}
+} */
 

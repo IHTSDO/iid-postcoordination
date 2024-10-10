@@ -32,7 +32,6 @@ export class EclExpandComponent implements OnInit {
     if (this.equivalentConcept?.code) {
       this.terminologyService.lookupConcept(this.equivalentConcept.code).subscribe(response => {
         if (!response.issue) {
-          console.log(response)
           // get the display name from the object response.parameter where name = "display"
           this.equivalentConcept.display = response.parameter.find((p: any) => p.name === 'display')?.valueString;
         } else {

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CodingSpecService } from './services/coding-spec.service';
-import { ExcelService } from './services/excel.service';
 import { TerminologyService } from './services/terminology.service';
 
 @Component({
@@ -24,7 +23,7 @@ export class AppComponent {
   ];
   selectedServer = this.fhirServers[2];
 
-  constructor( private codingSpecService: CodingSpecService, public excelService: ExcelService, private terminologyService: TerminologyService ) { }
+  constructor( private codingSpecService: CodingSpecService, private terminologyService: TerminologyService ) { }
 
   ngOnInit(): void {
     this.setFhirServer(this.selectedServer);

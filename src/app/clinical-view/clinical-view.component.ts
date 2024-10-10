@@ -54,15 +54,6 @@ export class ClinicalViewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getSafeHtml(input: string) {
-    let transformed = new ScgHighlightingPipe().transform(input);
-    transformed = transformed.replace(/,/g, ',\n');
-    transformed = transformed.replace(/}/g, '}\n');
-    transformed = transformed.replace(/:/g, ':\n');
-    transformed = transformed.replace(/{/g, '\t{');    
-    return this.sanitizer.bypassSecurityTrustHtml(transformed);
-  }
-
   clean() {
     this.selectedBone = undefined;
     this.selectedDisplacementMorph = undefined;
@@ -74,39 +65,39 @@ export class ClinicalViewComponent implements OnInit {
   }
 
   generateCloseToUserForm() {
-    let form = this.closeToUserFormRoot + ":\n";
+    let form = this.closeToUserFormRoot + ":";
+    const components = [];
     if (this.selectedBone) {
-      form = form + "\t" + this.selectedBone.attribute + " = " + this.selectedBone.code + " |" + this.selectedBone.display + "|";
+      components.push(
+        `${this.selectedBone.attribute} = ${this.selectedBone.code} |${this.selectedBone.display}|`
+      );
     }
     if (this.selectedFractureMorph) {
-      if (!form.endsWith(":\n")) {
-        form = form + " ,\n";
-      }
-      form = form + "\t" + this.selectedFractureMorph.attribute + " = " + this.selectedFractureMorph.code + " |" + this.selectedFractureMorph.display + "|";
+      components.push(
+        `${this.selectedFractureMorph.attribute} = ${this.selectedFractureMorph.code} |${this.selectedFractureMorph.display}|`
+      );
     }
     if (this.selectedDisplacementMorph) {
-      if (!form.endsWith(":\n")) {
-        form = form + " ,\n";
-      }
-      // if (!this.selectedBone)  {
-      //   form = form + "\t {" + "363698007 |Finding site (attribute)| = 272673000 |Bone structure (body structure)| ," + "\n";
-      // } else {
-      //   form = form + "\t {" + this.selectedBone.attribute + " = " + this.selectedBone.code + " |" + this.selectedBone.display + "| ,\n";
-      // }  
-      form = form + "\t" + this.selectedDisplacementMorph.attribute + " = " + this.selectedDisplacementMorph.code + " |" + this.selectedDisplacementMorph.display + "|";
+      components.push(
+        `${this.selectedDisplacementMorph.attribute} = ${this.selectedDisplacementMorph.code} |${this.selectedDisplacementMorph.display}|`
+      );
     }
-    if (form.endsWith(":\n")) {
-      // remove last 2 characters of the form
-      form = form.substring(0, form.length - 2);
+    if (components.length > 0) {
+      form += " " + components.join(", ");
     }
-    // update form to add a space before a pipe character only if the previous character is a digit
-    form = form.replace(/(\d)\|/g, '$1 |');
-
-    
+    form = form.replace(/(\d)\|/g, "$1 |");
+    form = form.replace(/\n/g, "");
+    return form;
   }
+  
+  
 
   updateCuf(form: string) {
+    form = form.replace(/\n/g, " ");
+    form = form.replace(/\s\s+/g, ' ');
     this.closeToUserForm = form;
+    this.necessaryNormalForm = "";
+    this.classifiableForm = "";
   }
 
   save() {

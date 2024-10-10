@@ -17,16 +17,9 @@
             </mat-tab>
           </mat-tab-group>
           <mat-card class="h-code-card">
-            <mat-card-title>Necessary Normal Form (NNF)</mat-card-title>
             <mat-card-content>
-              <p class="code" [innerHTML]="getSafeHtml(necessaryNormalForm)"></p>
-              <button mat-icon-button [cdkCopyToClipboard]="necessaryNormalForm" *ngIf="necessaryNormalForm" id="copy-icon" matTooltip="Copy to clipboard" class="muted">
-                  <mat-icon>content_copy</mat-icon>
-              </button>
+              <app-expression-forms [closeToUserForm]="closeToUserForm" [classifiableForm]="classifiableForm" [necessaryNormalForm]="necessaryNormalForm"></app-expression-forms>
             </mat-card-content>
-            <mat-card-actions>
-              <mat-spinner [diameter]="30" color="accent" *ngIf="loadingPatch"></mat-spinner>
-            </mat-card-actions>
           </mat-card>
         </div>
         <div class="code-container">

@@ -9,6 +9,7 @@ import { ScgHighlightingPipe } from '../pipes/scg-highlighting.pipe';
 })
 export class ExpressionFormsComponent implements OnInit {
 
+  @Input() closeToUserForm: string = "";
   @Input() classifiableForm: string = "";
   @Input() necessaryNormalForm: string = "";
 
@@ -19,8 +20,9 @@ export class ExpressionFormsComponent implements OnInit {
 
   getSafeHtml(input: string) {
     let transformed = new ScgHighlightingPipe().transform(input);
-    transformed = transformed.replace(/,/g, ',\n');
-    transformed = transformed.replace(/}/g, '}\n');
+    // transformed = transformed.replace(/,/g, ',\n');
+    transformed = transformed.replace(/} /g, '}\n');
+    transformed = transformed.replace(/},/g, '},\n');
     transformed = transformed.replace(/:/g, ':\n');
     transformed = transformed.replace(/{/g, '\t{'); 
     return this.sanitizer.bypassSecurityTrustHtml(transformed);
