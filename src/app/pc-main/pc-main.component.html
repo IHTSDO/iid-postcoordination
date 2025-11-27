@@ -16,7 +16,8 @@
                 <button mat-flat-button color="primary" [matMenuTriggerFor]="addMenu" [disabled]="!(addOptions.length > 0)">Qualify</button>
                 <button mat-flat-button color="primary" [matMenuTriggerFor]="refineMenu" [disabled]="!(refineOptions.length > 0)">Refine</button>
                 <button mat-flat-button color="primary" [matMenuTriggerFor]="mrcmMenu" [disabled]="!(mrcmAttributes?.items?.length > 0)">Self grouped attributes</button>
-                <button mat-flat-button color="warn" (click)="clearAll()" *ngIf="addOptions.length > 0 || refineOptions.length > 0 || mrcmAttributes?.items?.length > 0">
+                <button mat-flat-button color="primary" [matMenuTriggerFor]="otherMrcmMenu" [disabled]="!(otherMrcmAttributes?.items?.length > 0)">Other attributes</button>
+                <button mat-flat-button color="warn" (click)="clearAll()" *ngIf="addOptions.length > 0 || refineOptions.length > 0 || mrcmAttributes?.items?.length > 0 || otherMrcmAttributes?.items?.length > 0">
                     Clear
                 </button>
                 <mat-spinner [diameter]="30" color="accent" *ngIf="loadingPcOptions"></mat-spinner>
@@ -49,6 +50,11 @@
                 <mat-menu #mrcmMenu="matMenu">
                     <button mat-menu-item *ngFor="let mrcmOption of mrcmAttributes.items" (click)="openMrcmDialog(mrcmOption)">
                         {{ mrcmOption.fsn.term }}
+                    </button>
+                </mat-menu>
+                <mat-menu #otherMrcmMenu="matMenu">
+                    <button mat-menu-item *ngFor="let otherMrcmOption of otherMrcmAttributes.items" (click)="openMrcmDialog(otherMrcmOption)">
+                        {{ otherMrcmOption.fsn.term }}
                     </button>
                 </mat-menu>
             </div>

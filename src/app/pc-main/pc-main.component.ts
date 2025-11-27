@@ -102,6 +102,7 @@ export class PcMainComponent implements OnInit {
   selectedContextAttributes: any[] = [];
 
   mrcmAttributes: any = {};
+  otherMrcmAttributes: any = {};
   loadingMrcmAttributes = false;
   selfGroupedIds: any = ['260870009', '363702006', '42752001', '255234002', '288556008', '371881003', '263502005', '726633004'];
   equivalentConcept: any = {};
@@ -157,6 +158,7 @@ export class PcMainComponent implements OnInit {
     this.addOptions = [];
     this.refineOptions = [];
     this.mrcmAttributes = {};
+    this.otherMrcmAttributes = {};
     this.equivalentConcept = {};
   }
 
@@ -291,14 +293,23 @@ export class PcMainComponent implements OnInit {
     this.addOptions = [];
     this.refineOptions = [];
     this.mrcmAttributes = {};
+    this.otherMrcmAttributes = {};
     this.loadingPcOptions = true;
     this.loadingMrcmAttributes = true;
     this.terminologyService.getMRCMAttributes(concept.code).subscribe((data: any) => {
-      this.mrcmAttributes = data;
-      // remove all items from this.members whose conceptId is not in this.selfGroupedIds
-      this.mrcmAttributes.items = this.mrcmAttributes.items.filter((item: any) => this.selfGroupedIds.includes(item.conceptId));
-      // sort this.mrcmAttributes.items by fsn.term
+      // Separate items into selfGrouped and other attributes, excluding "Is a" attribute (116680003)
+      const allItems = (data.items || []).filter((item: any) => item.conceptId !== '116680003' && !item.fsn?.term?.toLowerCase().includes('is a'));
+      this.mrcmAttributes = {
+        ...data,
+        items: allItems.filter((item: any) => this.selfGroupedIds.includes(item.conceptId))
+      };
+      this.otherMrcmAttributes = {
+        ...data,
+        items: allItems.filter((item: any) => !this.selfGroupedIds.includes(item.conceptId))
+      };
+      // sort both by fsn.term
       this.mrcmAttributes.items.sort((a: any, b: any) => a.fsn.term.localeCompare(b.fsn.term));
+      this.otherMrcmAttributes.items.sort((a: any, b: any) => a.fsn.term.localeCompare(b.fsn.term));
       this.loadingMrcmAttributes = false;
     });
     this.terminologyService.lookupConcept(concept.code).subscribe((data: any) => {
