@@ -18,7 +18,7 @@ export class AppComponent {
   fhirServers = [
     { name: "SNOMED Dev IS", url: "https://dev-is-browser.ihtsdotools.org/fhir"},
     { name: "SNOMED Public", url: "https://snowstorm.ihtsdotools.org/snowstorm/snomed-ct/fhir"},
-    { name: "SNOMED Public", url: "https://snowstorm-temp.kaicode.io/fhir"},
+    { name: "Snowstorm-X Implementation Demo", url: "https://implementation-demo.snomedtools.org/fhir"},
 
   ];
   selectedServer = this.fhirServers[2];
