@@ -77,6 +77,9 @@ export class OdontogramProcedureComponent implements OnInit {
     this.selectedMorphology = undefined;
     this.selectedSubstance = undefined;
     this.selectedStatus = undefined;
+    this.filteredTeeth = this.teeth;
+    this.filteredProcedures = this.procedures;
+    this.filteredMorphologies = this.morphologies;
     this.closeToUserFormForDisplay = "Close to user form:   " + this.closeToUserFormRoot;
     this.closeToUserForm.emit(this.closeToUserFormRoot);
   }
@@ -129,24 +132,49 @@ export class OdontogramProcedureComponent implements OnInit {
     this.closeToUserForm.emit(form);
   }
 
-  onKeyTooth(event: any) {
-    let filter = event.target.value;
-    this.filteredTeeth = this.teeth.filter((tooth) => {
-      return tooth.display.toLowerCase().includes(filter.toLowerCase());
-    });
+  onToothChange(value: any) {
+    if (typeof value === 'string') {
+      this.selectedTooth = undefined;
+      this.filteredTeeth = this.filterByMultiPrefix(this.teeth, value);
+      return;
+    }
+    this.filteredTeeth = this.teeth;
+    this.generateCloseToUserForm();
   }
 
-  onKeyMorphology(event: any) {
-    let filter = event.target.value;
-    this.filteredMorphologies = this.morphologies.filter((finding) => {
-      return finding.display.toLowerCase().includes(filter.toLowerCase());
-    });
+  onMorphologyChange(value: any) {
+    if (typeof value === 'string') {
+      this.selectedMorphology = undefined;
+      this.filteredMorphologies = this.filterByMultiPrefix(this.morphologies, value);
+      return;
+    }
+    this.filteredMorphologies = this.morphologies;
+    this.generateCloseToUserForm();
   }
 
-  onKeyProcedure(event: any) {
-    let filter = event.target.value;
-    this.filteredProcedures = this.procedures.filter((finding) => {
-      return finding.display.toLowerCase().includes(filter.toLowerCase());
+  onProcedureChange(value: any) {
+    if (typeof value === 'string') {
+      this.selectedProcedure = undefined;
+      this.filteredProcedures = this.filterByMultiPrefix(this.procedures, value);
+      return;
+    }
+    this.filteredProcedures = this.procedures;
+    this.generateCloseToUserForm();
+  }
+
+  displayConcept(option: any): string {
+    return option?.display || '';
+  }
+
+  private filterByMultiPrefix(source: any[], query: string): any[] {
+    const normalizedQuery = (query || '').toLowerCase().trim();
+    if (!normalizedQuery) {
+      return source;
+    }
+    const prefixes = normalizedQuery.split(/\s+/).filter(Boolean);
+    return source.filter((item) => {
+      const words = (item?.display || '').toLowerCase().split(/[\s\-_/]+/).filter(Boolean);
+      return prefixes.every((prefix) => words.some((word: string) => word.startsWith(prefix)));
     });
   }
 

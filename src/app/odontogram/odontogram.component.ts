@@ -53,6 +53,8 @@ export class OdontogramComponent implements OnInit {
     this.selectedTooth = undefined;
     this.selectedToothSurfaces = [];
     this.selectedToothFinding = undefined;
+    this.filteredTeeth = this.teeth;
+    this.filteredToothFindings = this.toothFindings;
   }
 
   generateCloseToUserForm() {
@@ -99,17 +101,39 @@ export class OdontogramComponent implements OnInit {
     this.generateCloseToUserForm();
   }
 
-  onKeyTooth(event: any) {
-    let filter = event.target.value;
-    this.filteredTeeth = this.teeth.filter((tooth) => {
-      return tooth.display.toLowerCase().includes(filter.toLowerCase());
-    });
+  onToothChange(value: any) {
+    if (typeof value === 'string') {
+      this.selectedTooth = undefined;
+      this.filteredTeeth = this.filterByMultiPrefix(this.teeth, value);
+      return;
+    }
+    this.filteredTeeth = this.teeth;
+    this.generateCloseToUserForm();
   }
 
-  onKeyFinding(event: any) {
-    let filter = event.target.value;
-    this.filteredToothFindings = this.toothFindings.filter((finding) => {
-      return finding.display.toLowerCase().includes(filter.toLowerCase());
+  onToothFindingChange(value: any) {
+    if (typeof value === 'string') {
+      this.selectedToothFinding = undefined;
+      this.filteredToothFindings = this.filterByMultiPrefix(this.toothFindings, value);
+      return;
+    }
+    this.filteredToothFindings = this.toothFindings;
+    this.generateCloseToUserForm();
+  }
+
+  displayConcept(option: any): string {
+    return option?.display || '';
+  }
+
+  private filterByMultiPrefix(source: any[], query: string): any[] {
+    const normalizedQuery = (query || '').toLowerCase().trim();
+    if (!normalizedQuery) {
+      return source;
+    }
+    const prefixes = normalizedQuery.split(/\s+/).filter(Boolean);
+    return source.filter((item) => {
+      const words = (item?.display || '').toLowerCase().split(/[\s\-_/]+/).filter(Boolean);
+      return prefixes.every((prefix) => words.some((word: string) => word.startsWith(prefix)));
     });
   }
 
