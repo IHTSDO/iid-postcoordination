@@ -9,6 +9,27 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script>
+    (function () {
+      var measurementId = window.__GA_MEASUREMENT_ID__;
+      var isValidMeasurementId = typeof measurementId === 'string' && /^G-[A-Z0-9]+$/i.test(measurementId);
+
+      if (!isValidMeasurementId || window.__GA_INITIALIZED__) {
+        return;
+      }
+
+      window.__GA_INITIALIZED__ = true;
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', measurementId, { send_page_view: false });
+
+      var script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(measurementId);
+      document.head.appendChild(script);
+    })();
+  </script>
 </head>
 <body class="mat-typography">
   <app-root></app-root>

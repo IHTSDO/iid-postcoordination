@@ -6,6 +6,7 @@ import { ExpressionSavedComponent } from '../alerts/expression-saved';
 import { SnackAlertComponent } from '../alerts/snack-alert';
 import { ScgHighlightingPipe } from '../pipes/scg-highlighting.pipe';
 import { RefineTargetComponent } from '../refine-target/refine-target.component';
+import { GoogleAnalyticsService } from '../services/google-analytics.service';
 import { TerminologyService } from '../services/terminology.service';
 
 @Component({
@@ -107,7 +108,13 @@ export class PcMainComponent implements OnInit {
   selfGroupedIds: any = ['260870009', '363702006', '42752001', '255234002', '288556008', '371881003', '263502005', '726633004'];
   equivalentConcept: any = {};
 
-  constructor(private terminologyService: TerminologyService, public dialog: MatDialog, private sanitizer: DomSanitizer, private _snackBar: MatSnackBar) { }
+  constructor(
+    private terminologyService: TerminologyService,
+    public dialog: MatDialog,
+    private sanitizer: DomSanitizer,
+    private _snackBar: MatSnackBar,
+    private googleAnalyticsService: GoogleAnalyticsService
+  ) { }
 
   ngOnInit(): void {
     this.terminologyService.expandValueSet(this.severity.range,'').subscribe((data: any) => {
@@ -140,6 +147,9 @@ export class PcMainComponent implements OnInit {
       } else {
         this.binding = this.proceduresBinding;
       }
+      this.googleAnalyticsService.trackEvent('binding_selected', {
+        binding_type: this.getBindingAnalyticsLabel()
+      });
       this.clearSelected();
       this.timestamp = Date.now();
     }, 500);
@@ -170,6 +180,11 @@ export class PcMainComponent implements OnInit {
   setSelectedConcept(concept: any) {
     this.clearSelected();
     this.selectedConcept = concept;
+    this.googleAnalyticsService.trackEvent('focus_concept_selected', {
+      binding_type: this.getBindingAnalyticsLabel(),
+      concept_code: concept?.code,
+      concept_display: concept?.display
+    });
     this.generatePostcoordinationOptions(concept);
     this.generateCloseToUserForm();
   }
@@ -376,11 +391,25 @@ export class PcMainComponent implements OnInit {
 
   save() {
     if (this.closeToUserForm) {
+      this.googleAnalyticsService.trackEvent('postcoordination_transform_requested', {
+        binding_type: this.getBindingAnalyticsLabel(),
+        has_context_attributes: this.selectedContextAttributes.length > 0,
+        has_qualifications: this.selectedQualifications.length > 0,
+        has_severity: !!this.selectedSeverity,
+        has_laterality: !!this.selectedLaterality,
+        is_manual_entry: this.selectedBinding === '3'
+      });
       this.loadingPatch = true;
       this.classifiableForm = "";
       this.terminologyService.addPostcoordinatedExpression(this.closeToUserForm).subscribe(
         (data: any) => {
           if (data?.concept?.length > 0) {
+            this.googleAnalyticsService.trackConversion(
+              'postcoordination_transform_completed',
+              'workbench',
+              this.getBindingAnalyticsLabel(),
+              data.concept.length
+            );
             this._snackBar.openFromComponent(SnackAlertComponent, {
               duration: 5 * 1000,
               data: "Success: Expression saved in Expressions Repository",
@@ -402,6 +431,18 @@ export class PcMainComponent implements OnInit {
           this.loadingPatch = false;
         });
     }
+  }
+
+  private getBindingAnalyticsLabel(): string {
+    if (this.selectedBinding === '1') {
+      return 'clinical_findings';
+    }
+
+    if (this.selectedBinding === '2') {
+      return 'procedures';
+    }
+
+    return 'manual_entry';
   }
 
 }

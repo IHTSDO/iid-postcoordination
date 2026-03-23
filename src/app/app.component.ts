@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CodingSpecService } from './services/coding-spec.service';
+import { GoogleAnalyticsService } from './services/google-analytics.service';
 import { TerminologyService } from './services/terminology.service';
 
 @Component({
@@ -23,9 +24,14 @@ export class AppComponent {
   ];
   selectedServer = this.fhirServers[2];
 
-  constructor( private codingSpecService: CodingSpecService, private terminologyService: TerminologyService ) { }
+  constructor(
+    private codingSpecService: CodingSpecService,
+    private terminologyService: TerminologyService,
+    private googleAnalyticsService: GoogleAnalyticsService
+  ) { }
 
   ngOnInit(): void {
+    this.googleAnalyticsService.trackPageView();
     this.setFhirServer(this.selectedServer);
     this.bindingsForExport = [];
     let spec: any[] = this.codingSpecService.getCodingSpec();
